@@ -1,17 +1,30 @@
 {
-  "name": "io.cordova.hellocordova",
-  "displayName": "HelloCordova",
+  "name": "com.trussfinancialgroup.apps.dscrcalculator",
+  "displayName": "DSCR Calculator",
   "version": "1.0.0",
-  "description": "A sample Apache Cordova application that responds to the deviceready event.",
+  "description": "TODO",
   "main": "index.js",
   "scripts": {
+    "start": "npm run start:ios",
+    "start:ios": "cordova run ios",
+    "start:android": "cordova run android",
+    "start:browser": "cordova run browser",
+    "dev": "npm run dev:ios",
+    "dev:ios": "cdvlive ios",
+    "dev:android": "cdvlive android",
+    "dev:browser": "cdvlive browser",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
     "ecosystem:cordova"
   ],
-  "author": "Apache Cordova Team",
-  "license": "Apache-2.0",
+  "author": "Truss Financial Group <apps@trussfinancialgroup.com>",
+  "license": "UNLICENSED",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/runderworld/tfg-calculators-cordova.git"
+  },
+  "private": true,
   "devDependencies": {
     "cdvlive": "^1.0.1",
     "cordova": "^10.0.0",

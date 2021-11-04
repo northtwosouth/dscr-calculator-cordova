@@ -106,12 +106,8 @@ function onDeviceReady() {
                 subjectPropertyEstMonthlyInsur: _OPTS_DOLLAR_AMT,
                 subjectPropertyEstMonthlyPropTaxes: _OPTS_DOLLAR_AMT,
                 optMonthlyHoaDues: _OPTS_DOLLAR_AMT_OPTIONAL,
-                radioInterestOnlyDesired: {
-                    required: true,
-                },
-                radioUseNoRatioInstead: {
-                    required: true,
-                },
+                chkInterestOnlyDesired: {},
+                chkUseNoRatioInstead: {},
                 // outLtvRatio: _OPTS_PERCENT,
                 // outEstIntRate: _OPTS_PERCENT,
                 // outPrincipalAndInterest: _OPTS_DOLLAR_AMT,
@@ -163,8 +159,7 @@ function onDeviceReady() {
                     format: '0.000%',
                 },
                 K20: {//IO
-                    // formula: 'IF(E19="Yes",0.25%,0)',
-                    formula: 'E19',
+                    formula: 'IF(E19="Yes",0.25%,0)',
                     format: '0.000%',
                 },
                 K21: {//No_DSCR

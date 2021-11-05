@@ -6222,6 +6222,74 @@ logical : {
 
     },
 
+    //XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+    MATCH: function(lookupValue, lookupArray, matchType) {
+        var lookupIndex, lookupLength, max, posMax, min, posMin;
+
+        //  1 (default): largest value that is less than or equal to
+        //  0          : first value that is exactly equal to
+        // -1          : smallest value that is greater than or equal to
+        matchType = typeof matchType === 'undefined' ? 1 : matchType;
+
+        if (typeof lookupArray === 'object' && lookupArray.constructor.name === 'Object') {
+            lookupArray = utility.objectToArray(lookupArray);
+        }
+
+        lookupLength = lookupArray.length;
+
+        if (lookupValue < Math.min.apply(Math, lookupArray)) {
+            return '#N/A!';
+        }
+
+        // largest value that is less than or equal to
+        if (matchType === 1) {
+            // return Math.max.apply(Math, lookupArray.filter(function(x){return x <= lookupValue})) || '#N/A!';
+            // return '#TODO!';
+            max = Number.MIN_VALUE;
+            posMax = 0;//1-indexed
+            for (lookupIndex = 0; lookupIndex < lookupLength; lookupIndex++) { 
+                if (lookupArray[lookupIndex] <= lookupValue && lookupArray[lookupIndex] > max) { 
+                    max = lookupArray[lookupIndex];
+                    posMax = lookupIndex + 1;
+                }
+            }
+            return posMax || '#N/A!';
+        }
+        // first value that is exactly equal to
+        else if (matchType === 0) {
+            for (lookupIndex = 0; lookupIndex < lookupLength; lookupIndex++) {
+                if (lookupValue === lookupArray[lookupIndex]) {
+                    return lookupIndex + 1;// relative position within `lookupArray`
+                }
+            }
+        }
+        // smallest value that is greater than or equal to
+        else if (matchType === -1) {
+            min = Number.MAX_VALUE;
+            posMin = 0;//1-indexed
+            for (lookupIndex = 0; lookupIndex < lookupLength; lookupIndex++) { 
+                if (lookupArray[lookupIndex] >= lookupValue && lookupArray[lookupIndex] <= min) { 
+                    min = lookupArray[lookupIndex];
+                    posMin = lookupIndex + 1;
+                }
+            }
+            return posMin || '#N/A!';
+        }
+        else {
+            console.error('Unsupported `matchType` passed: ' + matchType);
+        }
+        return '#N/A!';
+    },
+
+    INDEX: function (table, rowNumber, columnNumber) {
+        if (typeof table === 'object') {
+            table = utility.rangeToTable(table);
+        }
+        //TODO
+        return table[rowNumber-1][columnNumber-1];
+    },
+    //XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
     SERVER: function() {
         if (this.config.ajaxUrl == null) {
             return data.ERRKEY.ajaxUrlRequired;
@@ -9007,19 +9075,19 @@ cell.fx.checkCircularReference = function(address){
  * @return {mixed}
  */
 cell.fx.evaluateFormula = function(){
-    //console.log('cell[#'+this.sheet.elementId+'!'+this.address+'] : evaluating formula ['+this.formula+']');
+    console.log('cell[#'+this.sheet.elementId+'!'+this.address+'] : evaluating formula ['+this.formula+']');
 
     if(this.formula){
         try{
             this.sheet.setActiveCell(this);
             this.computedValue = this.sheet.evaluate(this.formula);
-            //console.log('cell[#'+this.sheet.elementId+'!'+this.address+'] : formula result: '+this.computedValue);
+            console.log('cell[#'+this.sheet.elementId+'!'+this.address+'] : formula result: '+this.computedValue);
             return this.computedValue;
         }catch(e){
             //console.log(e);
             this.computedValue = '#ERROR!';
+            console.error('formula error on '+this.address+' : '+this.formula);
             return false;
-            //console.error('formula error on '+this.address+' : '+this.formula);
         }
     }
 

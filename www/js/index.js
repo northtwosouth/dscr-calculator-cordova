@@ -152,11 +152,18 @@ function onDeviceReady() {
                     format: '0%',
                 },
                 K17: {//Base_Rate  (A==>J, B==>K, ...)
-                    // formula: 'INDEX(K6:Q12, MATCH(K14,J6:J12,-1), MATCH(K15,K5:Q5,1))',
-                    //        SUMPRODUCT(vlookup_col_range = vlookup_value) * (hlookup_row_range = hlookup_value) * data_array)
-                    // formula: 'SUMPRODUCT( (J6:J12=K14) * (K5:Q5=K15) * K6:Q12)',
-                    formula: 'SUMPRODUCT((J6:J12=K14) * (K5:Q5=K15) * K6:Q12)',
-                    // format: '0.000%',
+                    // See also: https://www.ablebits.com/office-addins-blog/2019/12/17/index-match-match-two-dimensional-lookup-excel#sumproduct
+                    //
+                    // formula: 'MATCH(K14,J6:J12,-1)',
+                    // formula: 'MATCH(K15,K5:Q5,1)',
+                    formula: 'INDEX(K6:Q12, MATCH(K14,J6:J12,-1), MATCH(K15,K5:Q5,1))',
+                    //
+                    //           SUMPRODUCT(vlookup_col_range = vlookup_value) * (hlookup_row_range = hlookup_value) * data_array)
+                    // formula: 'SUMPRODUCT( (J6:J12=K14) * (K5:Q5=K15) * K6:Q12 )',
+                    //
+                    //           VLOOKUP(vlookup_value, table_array, MATCH(hlookup_value, hlookup_row_range, 0), FALSE)
+                    // formula: 'VLOOKUP(K14, K6:Q12, MATCH(K15, K5:Q5, 0), FALSE)',
+                    format: '0.000%',
                 },
                 K19: {//TWO_to_FOUR_Units
                     formula: 'IF(C14>=2,0.25%,0)',

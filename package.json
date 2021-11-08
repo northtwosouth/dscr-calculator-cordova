@@ -31,6 +31,7 @@
     "cordova": "^10.0.0",
     "cordova-android": "^9.1.0",
     "cordova-browser": "^6.0.0",
+    "cordova-icon": "^1.0.0",
     "cordova-ios": "^6.2.0",
     "cordova-plugin-badge": "^0.8.8",
     "cordova-plugin-device": "^2.0.3",

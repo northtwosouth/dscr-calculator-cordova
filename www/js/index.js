@@ -199,8 +199,20 @@ function onDeviceReady() {
     });
 
     cordova.plugins.notification.local.schedule({
-        title: 'My first notification',
-        text: 'Thats pretty easy...',
+        title: 'Welcome',
+        text: 'Thanks for downloading the app!',
         foreground: true
     });
+
+    window.cordova.plugins.SignInWithApple.signin(
+        { requestedScopes: [0, 1] },
+        function(succ){
+          console.log(succ)
+          alert(JSON.stringify(succ))
+        },
+        function(err){
+          console.error(err)
+          console.log(JSON.stringify(err))
+        }
+      )
 }//END: `onDeviceReady`

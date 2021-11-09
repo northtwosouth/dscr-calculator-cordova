@@ -204,21 +204,49 @@ function onDeviceReady() {
         foreground: true
     });
 
-    window.cordova.plugins.SignInWithApple.signin(
-        {
-            requestedScopes: [
-                0, // FullName
-                1, // Email
-            ]
-        },
-        function (succ) {
-            console.log(succ);
-            alert(JSON.stringify(succ));
-            //XXX TODO: Send to Hubspot
-        },
-        function (err) {
-            console.error(err);
-            console.log(JSON.stringify(err));
-        }
-    );
+    if (device.platform.toLowerCase() === 'ios') {
+        window.cordova.plugins.SignInWithApple.signin(
+            {
+                requestedScopes: [
+                    0, // FullName
+                    1, // Email
+                ]
+            },
+            function (succ) {
+                console.log(succ);
+                alert(JSON.stringify(succ));
+                //XXX TODO: Send to Hubspot
+            },
+            function (err) {
+                switch (err.code) {
+                    case '1000':
+                        XXX;
+                        break;
+                    default:
+                        console.log('Unknown error code returned from Apple: ' + err.code);
+                        break;
+                }
+                console.error(err);
+                console.log(JSON.stringify(err));
+            }
+        );
+    }
+    else if (device.platform.toLowerCase() === 'android') {
+        window.plugins.googleplus.login(
+            {
+              'scopes': 'profile email', // optional, space-separated list of scopes, If not included or empty, defaults to `profile` and `email`.
+              'webClientId': 'com.googleusercontent.apps.1060980760645-q1ugnupkteqo64n34e2kaomrq61m23hd', // optional clientId of your Web application from Credentials settings of your project - On Android, this MUST be included to get an idToken. On iOS, it is not required.
+            //   'offline': true // optional, but requires the webClientId - if set to true the plugin will also return a serverAuthCode, which can be used to grant offline access to a non-Google server
+            },
+            function (obj) {
+              alert(JSON.stringify(obj)); // do something useful instead of alerting
+            },
+            function (msg) {
+              alert('error: ' + msg);
+            }
+        );
+    }
+    else {
+        alert('Unexpected device.platform: ' + device.platform);
+    }
 }//END: `onDeviceReady`

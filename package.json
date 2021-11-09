@@ -44,7 +44,11 @@
     "plugins": {
       "cordova-plugin-whitelist": {},
       "cordova-plugin-local-notification": {},
-      "cordova-plugin-sign-in-with-apple": {}
+      "cordova-plugin-sign-in-with-apple": {},
+      "cordova-plugin-googleplus": {
+        "REVERSED_CLIENT_ID": "com.googleusercontent.apps.1060980760645-g24fov73205bc4efo2io54lh6u54p7oj",
+        "WEB_APPLICATION_CLIENT_ID": "com.googleusercontent.apps.1060980760645-q1ugnupkteqo64n34e2kaomrq61m23hd"
+      }
     },
     "platforms": [
       "ios",

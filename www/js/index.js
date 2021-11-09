@@ -205,14 +205,20 @@ function onDeviceReady() {
     });
 
     window.cordova.plugins.SignInWithApple.signin(
-        { requestedScopes: [0, 1] },
-        function(succ){
-          console.log(succ)
-          alert(JSON.stringify(succ))
+        {
+            requestedScopes: [
+                0, // FullName
+                1, // Email
+            ]
         },
-        function(err){
-          console.error(err)
-          console.log(JSON.stringify(err))
+        function (succ) {
+            console.log(succ);
+            alert(JSON.stringify(succ));
+            //XXX TODO: Send to Hubspot
+        },
+        function (err) {
+            console.error(err);
+            console.log(JSON.stringify(err));
         }
-      )
+    );
 }//END: `onDeviceReady`

@@ -1,11 +1,11 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.trussfinancialgroup.apps.DscrCalculator" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.northtwosouth.apps.DscrCalculator" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>DSCR Calculator</name>
     <description>
-        Debt Service Coverage Ratio (DSCR) Calculator provided by Truss Financial Group.
+        Debt Service Coverage Ratio (DSCR) Calculator provided by Truss Financial Groug.
     </description>
-    <author email="apps@trussfinancialgroup.com" href="https://www.trussfinancialgroup.com/">
-        Truss Financial Group
+    <author email="apps@northtwosouth.com" href="https://www.northtwosouth.com/">
+        North 2 South, LLC
     </author>
     <content src="index.html" />
     <access origin="*" />

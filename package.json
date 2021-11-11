@@ -1,5 +1,5 @@
 {
-  "name": "com.trussfinancialgroup.apps.DscrCalculator",
+  "name": "com.northtwosouth.apps.DscrCalculator",
   "displayName": "DSCR Calculator",
   "version": "1.0.0",
   "description": "DSCR (Debt Service Coverage Ratio) Calculator provided by Truss Financial Group.",
@@ -20,7 +20,7 @@
   "keywords": [
     "ecosystem:cordova"
   ],
-  "author": "Truss Financial Group <apps@trussfinancialgroup.com>",
+  "author": "North 2 South, LLC <apps@northtwosouth.com>",
   "license": "UNLICENSED",
   "repository": {
     "type": "git",
@@ -46,8 +46,8 @@
       "cordova-plugin-local-notification": {},
       "cordova-plugin-sign-in-with-apple": {},
       "cordova-plugin-googleplus": {
-        "REVERSED_CLIENT_ID": "com.googleusercontent.apps.1060980760645-g24fov73205bc4efo2io54lh6u54p7oj",
-        "WEB_APPLICATION_CLIENT_ID": "com.googleusercontent.apps.1060980760645-q1ugnupkteqo64n34e2kaomrq61m23hd"
+        "REVERSED_CLIENT_ID": "com.googleusercontent.apps.711934747211-e69tfjdp0qbdisui3fu3s1tden9h8uj2",
+        "WEB_APPLICATION_CLIENT_ID": "com.googleusercontent.apps.711934747211-9jiqn8i1klq69sodg7ds2td7nt5t6mgu"
       }
     },
     "platforms": [

@@ -215,6 +215,9 @@ function onDeviceReady() {
             function (succ) {
                 console.log(succ);
                 alert(JSON.stringify(succ));
+                var jwt = succ.identityToken;
+                var decoded = jwt_decode(jwt);
+                console.log('jwt_decode() ==> ' + JSON.stringify(decoded));
                 //XXX TODO: Send to Hubspot
             },
             function (err) {

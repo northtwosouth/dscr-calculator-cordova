@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "711934747211",
+    "project_id": "northtwosouth-9a779",
+    "storage_bucket": "northtwosouth-9a779.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:711934747211:android:715a3bef317ab6b223e3ce",
+        "android_client_info": {
+          "package_name": "com.northtwosouth.apps.DscrCalculator"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "711934747211-9jiqn8i1klq69sodg7ds2td7nt5t6mgu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCXvdXRl1ohvYLhtK38T4Fc0SZLWO80Fpc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "711934747211-9jiqn8i1klq69sodg7ds2td7nt5t6mgu.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "711934747211-i356t5ubaemf6f0nkmh477751bign78q.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.northtwosouth.apps.DscrCalculator"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

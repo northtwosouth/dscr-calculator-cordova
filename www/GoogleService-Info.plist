@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>711934747211-i356t5ubaemf6f0nkmh477751bign78q.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.711934747211-i356t5ubaemf6f0nkmh477751bign78q</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>711934747211-e69tfjdp0qbdisui3fu3s1tden9h8uj2.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyAbA8E7z9U_lQEzzj9b8FjR5yBiMHDs84I</string>
+	<key>GCM_SENDER_ID</key>
+	<string>711934747211</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.northtwosouth.apps.DscrCalculator</string>
+	<key>PROJECT_ID</key>
+	<string>northtwosouth-9a779</string>
+	<key>STORAGE_BUCKET</key>
+	<string>northtwosouth-9a779.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:711934747211:ios:d52753459068cc2623e3ce</string>
+</dict>
+</plist>

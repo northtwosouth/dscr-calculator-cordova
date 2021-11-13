@@ -9,7 +9,11 @@ function perc(num) {
 function onDeviceReady() {
     // Cordova is now initialized. Have fun!
 
-    console.log('Running cordova-' + cordova.platformId + '@' + cordova.version);
+    console.log('Running cordova-' + window.cordova.platformId + '@' + window.cordova.version);
+
+    $('#debugValuesDisplayToggle').on('click', function () {
+        toggleDisplayDebugValues();
+    });
 
     $(function () {
         var _ERR_MSG_PERCENT = 'Please enter a valid percentage (up to two decimal places)';
@@ -66,6 +70,7 @@ function onDeviceReady() {
             }
         }); //END: `$.validator.setDefaults(...)`
 
+        // Prevent form submissions on <Enter> key
         $('form#calxForm').bind('keypress', function (event) {
             if (event.keyCode === 13) {
                 return false;
@@ -73,13 +78,9 @@ function onDeviceReady() {
         });
 
         // Initialize form validation on the registration form.
-        // It has the name attribute "registration"
         $('form#calxForm').validate({
             // Specify validation rules
             rules: {
-                // The key name on the left side is the name attribute
-                // of an input field. Validation rules are defined
-                // on the right side
                 borrowerName: {
                     required: true,
                 },
@@ -127,7 +128,7 @@ function onDeviceReady() {
             // Make sure the form is submitted to the destination defined
             // in the "action" attribute of the form when valid
             submitHandler: function (form) {
-                //form.submit(); // XXX TODO
+                onPressCalculate();
             }
         }); //END: `$(...).validate(...)`
 
@@ -197,11 +198,13 @@ function onDeviceReady() {
             // onAfterCalculate: function () { /* do the process here */ }
         });
     });
+}//END: `onDeviceReady`
 
-    cordova.plugins.notification.local.schedule({
+function onPressCalculate() {
+    window.cordova.plugins.notification.local.schedule({
         title: 'Welcome',
-        text: 'Thanks for downloading the app!',
-        foreground: true
+        text: 'Thanks for downloading the app! Be sure to check out our other calculators!',
+        foreground: true,
     });
 
     if (device.platform.toLowerCase() === 'ios') {
@@ -213,43 +216,111 @@ function onDeviceReady() {
                 ]
             },
             function (succ) {
-                console.log(succ);
-                alert(JSON.stringify(succ));
-                var jwt = succ.identityToken;
-                var decoded = jwt_decode(jwt);
-                console.log('jwt_decode() ==> ' + JSON.stringify(decoded));
-                //XXX TODO: Send to Hubspot
+                var decodedObj = jwt_decode(succ.identityToken);
+                console.log('Apple login succeeded.\nRaw response: ' + JSON.stringify(succ) + '\nDecoded JWT: ' + JSON.stringify(decodedObj));
+                toggleDisplayOutputValues(true);
+                sendToHubspot(decodedObj.email, decodedObj.fullName.givenName, decodedObj.fullName.familyName);
             },
             function (err) {
+                console.error('Apple login failed: ' + JSON.stringify(err));
                 switch (err.code) {
-                    case '1000':
-                        XXX;
+                    case '1001': // ASAuthorizationErrorCanceled (user cancelled)
+                    case '1003': // ASAuthorizationErrorNotHandled (user cancelled)
+                        //TODO: Sorry we won't let you have the results. They can try again
+                        toggleDisplayOutputValues(false);
+                        window.alert('Sorry, please try pressing "Calculate" button again.');
                         break;
-                    default:
-                        console.log('Unknown error code returned from Apple: ' + err.code);
+                    case '1000': // ASAuthorizationErrorUnknown (authorization attempt failed for an unknown reason)
+                    case '1002': // ASAuthorizationErrorInvalidResponse (authorization request received an invalid response.)
+                    default:     // Unknown error code returned from Apple
+                        //TODO: We'll let them have the results BUT we won't persist the flag that they registered
+                        toggleDisplayOutputValues(true);
                         break;
                 }
-                console.error(err);
-                console.log(JSON.stringify(err));
             }
         );
     }
     else if (device.platform.toLowerCase() === 'android') {
-        window.plugins.googleplus.login(
+        window.cordova.plugins.googleplus.login(
             {
-              'scopes': 'profile email', // optional, space-separated list of scopes, If not included or empty, defaults to `profile` and `email`.
-              'webClientId': 'com.googleusercontent.apps.1060980760645-q1ugnupkteqo64n34e2kaomrq61m23hd', // optional clientId of your Web application from Credentials settings of your project - On Android, this MUST be included to get an idToken. On iOS, it is not required.
-            //   'offline': true // optional, but requires the webClientId - if set to true the plugin will also return a serverAuthCode, which can be used to grant offline access to a non-Google server
+                'scopes': 'profile email', // optional, space-separated list of scopes, If not included or empty, defaults to `profile` and `email`.
+                'webClientId': 'com.googleusercontent.apps.1060980760645-q1ugnupkteqo64n34e2kaomrq61m23hd', // optional clientId of your Web application from Credentials settings of your project - On Android, this MUST be included to get an idToken. On iOS, it is not required.
+                //   'offline': true // optional, but requires the webClientId - if set to true the plugin will also return a serverAuthCode, which can be used to grant offline access to a non-Google server
             },
             function (obj) {
-              alert(JSON.stringify(obj)); // do something useful instead of alerting
+                console.log('Google login succeeded: ' + JSON.stringify(obj));
+                toggleDisplayOutputValues(true);
+                sendToHubspot(obj.email, obj.givenName, obj.familyName);
             },
             function (msg) {
-              alert('error: ' + msg);
+                alert('Google login failed: ' + msg);
+                toggleDisplayOutputValues(false);
             }
         );
+    }
+    else if (device.platform.toLowerCase() === 'browser') {
+        //XXX TODO: handle web browser case
+        toggleDisplayOutputValues(true);
     }
     else {
         alert('Unexpected device.platform: ' + device.platform);
     }
-}//END: `onDeviceReady`
+}
+
+function toggleDisplayOutputValues(/*optional*/show) {
+    if (typeof show === 'undefined') {
+        console.log('Now toggling output values.');
+        $('#outputValuesContainer').toggle();
+    }
+    else {
+        console.log('Now ' + (show ? 'showing' : 'hiding') + ' output values.');
+        $('#outputValuesContainer')[show ? 'show' : 'hide']();
+    }
+}
+
+function toggleDisplayDebugValues(/*optional*/show) {
+    if (typeof show === 'undefined') {
+        console.log('Now toggling debug values.');
+        $('#debugValuesContainer').toggle();
+    }
+    else {
+        console.log('Now ' + (show ? 'showing' : 'hiding') + ' debug values.');
+        $('#debugValuesContainer')[show ? 'show' : 'hide']();
+    }
+}
+
+function sendToHubspot(email, firstname, lastname) {
+    var portalId = '20494112';
+    var formGuid = '34c828b3-74fc-47bb-b42a-5978f82e7d80';
+    // var nameTokens = fullname.split(' ');
+    // var firstname = nameTokens[0];
+    // var lastname = '';
+    // if (nameTokens.length > 1) {
+    //     if (nameTokens.length === 2) {
+    //         lastname = nameTokens[1];
+    //     }
+    //     else {
+    //         lastname = nameTokens.slice(1).join(' ');
+    //     }
+    // }
+
+    console.log('Sending registration data to Hubspot...');
+
+    $.ajax({
+        url: 'https://api.hsforms.com/submissions/v3/integration/submit/' + portalId + '/' + formGuid,
+        method: 'POST',
+        dataType: 'json',
+        data: {
+            email: email,
+            firstname: firstname,
+            lastname: lastname,
+        },
+    }).done(function (response, textStatus, jqXHR) {
+        console.log('Registration data successfully sent to Hubspot.');
+    }).fail(function (jqXHR, textStatus, errorThrown) {
+        console.error('Failed to send registration data to Hubspot: ' + errorThrown);
+        //No recourse
+    }).always(function () {
+        //...
+    });
+}

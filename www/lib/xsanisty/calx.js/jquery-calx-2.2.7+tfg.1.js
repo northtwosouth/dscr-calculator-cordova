@@ -9075,13 +9075,13 @@ cell.fx.checkCircularReference = function(address){
  * @return {mixed}
  */
 cell.fx.evaluateFormula = function(){
-    console.log('cell[#'+this.sheet.elementId+'!'+this.address+'] : evaluating formula ['+this.formula+']');
+    //console.log('cell[#'+this.sheet.elementId+'!'+this.address+'] : evaluating formula ['+this.formula+']');
 
     if(this.formula){
         try{
             this.sheet.setActiveCell(this);
             this.computedValue = this.sheet.evaluate(this.formula);
-            console.log('cell[#'+this.sheet.elementId+'!'+this.address+'] : formula result: '+this.computedValue);
+            //console.log('cell[#'+this.sheet.elementId+'!'+this.address+'] : formula result: '+this.computedValue);
             return this.computedValue;
         }catch(e){
             //console.log(e);

@@ -200,70 +200,100 @@ function onDeviceReady() {
     });
 }//END: `onDeviceReady`
 
-function onPressCalculate() {
+function setSignupCompleted(isSignupCompleted) {
+    console.log('Storing "isSignupCompleted" value: ' + isSignupCompleted);
+    window.localStorage.setItem('isSignupCompleted', ''+isSignupCompleted);
+}
+
+function isSignupCompleted() {
+    var isSignupCompleted = window.localStorage.getItem('isSignupCompleted') === 'true';
+    return isSignupCompleted;
+}
+
+function alertNoSignupYet() {
+    navigator.notification.alert('Looks like you haven\'t signed in before. Once you sign in, you can view and print your results in the app.');
+}
+
+function sendLocalNotification() {
     window.cordova.plugins.notification.local.schedule({
-        title: 'Welcome',
-        text: 'Thanks for downloading the app! Be sure to check out our other calculators!',
+        title: 'Thanks',
+        text: 'Hope you found the app useful! Be sure to check out our other calculator apps!',
         foreground: true,
     });
+}
 
+function onPressCalculate() {
     if (device.platform.toLowerCase() === 'ios') {
-        window.cordova.plugins.SignInWithApple.signin(
-            {
-                requestedScopes: [
-                    0, // FullName
-                    1, // Email
-                ]
-            },
-            function (succ) {
-                var decodedObj = jwt_decode(succ.identityToken);
-                console.log('Apple login succeeded.\nRaw response: ' + JSON.stringify(succ) + '\nDecoded JWT: ' + JSON.stringify(decodedObj));
-                toggleDisplayOutputValues(true);
-                sendToHubspot(decodedObj.email, decodedObj.fullName.givenName, decodedObj.fullName.familyName);
-            },
-            function (err) {
-                console.error('Apple login failed: ' + JSON.stringify(err));
-                switch (err.code) {
-                    case '1001': // ASAuthorizationErrorCanceled (user cancelled)
-                    case '1003': // ASAuthorizationErrorNotHandled (user cancelled)
-                        //TODO: Sorry we won't let you have the results. They can try again
-                        toggleDisplayOutputValues(false);
-                        window.alert('Sorry, please try pressing "Calculate" button again.');
-                        break;
-                    case '1000': // ASAuthorizationErrorUnknown (authorization attempt failed for an unknown reason)
-                    case '1002': // ASAuthorizationErrorInvalidResponse (authorization request received an invalid response.)
-                    default:     // Unknown error code returned from Apple
-                        //TODO: We'll let them have the results BUT we won't persist the flag that they registered
-                        toggleDisplayOutputValues(true);
-                        break;
+        if (!isSignupCompleted()) {
+            alertNoSignupYet();
+            window.cordova.plugins.SignInWithApple.signin(
+                {
+                    requestedScopes: [
+                        0, // FullName
+                        1, // Email
+                    ]
+                },
+                function (succ) {
+                    var decodedObj = jwt_decode(succ.identityToken);
+                    console.log('Apple login succeeded.\nRaw response: ' + JSON.stringify(succ) + '\nDecoded JWT: ' + JSON.stringify(decodedObj));
+                    setSignupCompleted(true);
+                    toggleDisplayOutputValues(true);
+                    sendToHubspot(decodedObj.email, decodedObj.fullName.givenName, decodedObj.fullName.familyName);
+                },
+                function (err) {
+                    console.error('Apple login failed: ' + JSON.stringify(err));
+                    switch (err.code) {
+                        case '1001': // ASAuthorizationErrorCanceled (user cancelled)
+                        case '1003': // ASAuthorizationErrorNotHandled (user cancelled)
+                            //TODO: Sorry we won't let you have the results. They can try again
+                            setSignupCompleted(false);
+                            toggleDisplayOutputValues(false);
+                            navigator.notification.alert('Sorry, please try pressing the "Calculate" button again.');
+                            break;
+                        case '1000': // ASAuthorizationErrorUnknown (authorization attempt failed for an unknown reason)
+                        case '1002': // ASAuthorizationErrorInvalidResponse (authorization request received an invalid response.)
+                        default:     // Unknown error code returned from Apple
+                            //TODO: We'll let them have the results BUT we won't persist the flag that they registered
+                            setSignupCompleted(false);
+                            toggleDisplayOutputValues(true);
+                            break;
+                    }
                 }
-            }
-        );
+            );//END: `plugins.SignInWithApple.signin`
+        }//END: `if (!isSignupCompleted())`
     }
     else if (device.platform.toLowerCase() === 'android') {
-        window.cordova.plugins.googleplus.login(
-            {
-                'scopes': 'profile email', // optional, space-separated list of scopes, If not included or empty, defaults to `profile` and `email`.
-                'webClientId': 'com.googleusercontent.apps.1060980760645-q1ugnupkteqo64n34e2kaomrq61m23hd', // optional clientId of your Web application from Credentials settings of your project - On Android, this MUST be included to get an idToken. On iOS, it is not required.
-                //   'offline': true // optional, but requires the webClientId - if set to true the plugin will also return a serverAuthCode, which can be used to grant offline access to a non-Google server
-            },
-            function (obj) {
-                console.log('Google login succeeded: ' + JSON.stringify(obj));
-                toggleDisplayOutputValues(true);
-                sendToHubspot(obj.email, obj.givenName, obj.familyName);
-            },
-            function (msg) {
-                alert('Google login failed: ' + msg);
-                toggleDisplayOutputValues(false);
-            }
-        );
+        if (!isSignupCompleted()) {
+            alertNoSignupYet();
+            window.cordova.plugins.googleplus.login(
+                {
+                    'scopes': 'profile email', // optional, space-separated list of scopes, If not included or empty, defaults to `profile` and `email`.
+                    'webClientId': 'com.googleusercontent.apps.1060980760645-q1ugnupkteqo64n34e2kaomrq61m23hd', // optional clientId of your Web application from Credentials settings of your project - On Android, this MUST be included to get an idToken. On iOS, it is not required.
+                    //   'offline': true // optional, but requires the webClientId - if set to true the plugin will also return a serverAuthCode, which can be used to grant offline access to a non-Google server
+                },
+                function (obj) {
+                    console.log('Google login succeeded: ' + JSON.stringify(obj));
+                    toggleDisplayOutputValues(true);
+                    sendToHubspot(obj.email, obj.givenName, obj.familyName);
+                },
+                function (msg) {
+                    navigator.notification.alert('Google login failed: ' + msg);
+                    toggleDisplayOutputValues(false);
+                }
+            );//END: `plugins.googleplus.login`
+        }//END: `if (!isSignupCompleted())`
     }
     else if (device.platform.toLowerCase() === 'browser') {
         //XXX TODO: handle web browser case
+        sendToHubspot(
+            window.prompt('Email address') || 'ryan+testuser@fake.com',
+            window.prompt('First name') || 'Ryan Test',
+            window.prompt('Last name') || 'User'
+        );
         toggleDisplayOutputValues(true);
     }
     else {
-        alert('Unexpected device.platform: ' + device.platform);
+        navigator.notification.alert('Unexpected device.platform: ' + device.platform);
     }
 }
 
@@ -307,9 +337,8 @@ function sendToHubspot(email, firstname, lastname) {
     console.log('Sending registration data to Hubspot...');
 
     $.ajax({
-        url: 'https://api.hsforms.com/submissions/v3/integration/submit/' + portalId + '/' + formGuid,
+        url: 'https://forms.hubspot.com/uploads/form/v2/' + portalId + '/' + formGuid,
         method: 'POST',
-        dataType: 'json',
         data: {
             email: email,
             firstname: firstname,
@@ -317,6 +346,7 @@ function sendToHubspot(email, firstname, lastname) {
         },
     }).done(function (response, textStatus, jqXHR) {
         console.log('Registration data successfully sent to Hubspot.');
+        sendLocalNotification();
     }).fail(function (jqXHR, textStatus, errorThrown) {
         console.error('Failed to send registration data to Hubspot: ' + errorThrown);
         //No recourse

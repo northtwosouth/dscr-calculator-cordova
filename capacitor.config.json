@@ -1,0 +1,6 @@
+{
+  "appId": "com.northtwosouth.apps.DscrCalculator",
+  "appName": "DSCR Calculator",
+  "webDir": "www",
+  "bundledWebRuntime": false
+}

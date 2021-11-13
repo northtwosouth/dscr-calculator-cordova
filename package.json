@@ -30,11 +30,12 @@
   },
   "private": true,
   "devDependencies": {
+    "@capacitor/android": "^3.3.1",
+    "@capacitor/cli": "^3.3.1",
+    "@capacitor/core": "^3.3.1",
+    "@capacitor/ios": "^3.3.1",
     "cdvlive": "^1.0.1",
     "cordova": "^10.0.0",
-    "cordova-android": "^9.1.0",
-    "cordova-browser": "^6.0.0",
-    "cordova-ios": "^6.2.0",
     "cordova-plugin-badge": "^0.8.8",
     "cordova-plugin-device": "^2.0.3",
     "cordova-plugin-firebasex": "^13.0.1-cli",
@@ -51,11 +52,7 @@
       "cordova-plugin-sign-in-with-apple": {},
       "cordova-plugin-firebasex": {}
     },
-    "platforms": [
-      "ios",
-      "android",
-      "browser"
-    ]
+    "platforms": []
   },
   "dependencies": {}
 }

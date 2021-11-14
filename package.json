@@ -51,7 +51,11 @@
       "cordova-plugin-sign-in-with-apple": {},
       "cordova-plugin-firebasex": {},
       "cordova-plugin-androidx-adapter": {},
-      "cordova-plugin-dialogs": {}
+      "cordova-plugin-dialogs": {},
+      "cordova-plugin-googleplus": {
+        "REVERSED_CLIENT_ID": "com.googleusercontent.apps.711934747211-e69tfjdp0qbdisui3fu3s1tden9h8uj2",
+        "WEB_APPLICATION_CLIENT_ID": "com.googleusercontent.apps.711934747211-9jiqn8i1klq69sodg7ds2td7nt5t6mgu"
+      }
     },
     "platforms": [
       "ios",
@@ -61,6 +65,7 @@
   },
   "dependencies": {
     "cordova-plugin-androidx-adapter": "1.1.3",
-    "cordova-plugin-dialogs": "2.0.2"
+    "cordova-plugin-dialogs": "2.0.2",
+    "cordova-plugin-googleplus": "git+https://github.com/runderworld/cordova-plugin-googleplus.git"
   }
 }

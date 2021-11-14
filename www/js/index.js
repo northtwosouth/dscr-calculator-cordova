@@ -225,7 +225,7 @@ function sendLocalNotification() {
 function onPressCalculate() {
     if (device.platform.toLowerCase() === 'ios') {
         if (!isSignupCompleted()) {
-            alertNoSignupYet();
+            //alertNoSignupYet();//XXX TODO figure out how to pause here
             window.cordova.plugins.SignInWithApple.signin(
                 {
                     requestedScopes: [
@@ -264,7 +264,7 @@ function onPressCalculate() {
     }
     else if (device.platform.toLowerCase() === 'android') {
         if (!isSignupCompleted()) {
-            alertNoSignupYet();
+            //alertNoSignupYet();//XXX TODO figure out how to pause here
             window.plugins.googleplus.login(
                 {
                     'scopes': 'profile email', // optional, space-separated list of scopes, If not included or empty, defaults to `profile` and `email`.

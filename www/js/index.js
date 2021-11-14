@@ -265,7 +265,7 @@ function onPressCalculate() {
     else if (device.platform.toLowerCase() === 'android') {
         if (!isSignupCompleted()) {
             alertNoSignupYet();
-            window.cordova.plugins.googleplus.login(
+            window.plugins.googleplus.login(
                 {
                     'scopes': 'profile email', // optional, space-separated list of scopes, If not included or empty, defaults to `profile` and `email`.
                     'webClientId': 'com.googleusercontent.apps.1060980760645-q1ugnupkteqo64n34e2kaomrq61m23hd', // optional clientId of your Web application from Credentials settings of your project - On Android, this MUST be included to get an idToken. On iOS, it is not required.

@@ -14,3 +14,15 @@ node_modules/
 /resources/ios/splash
 /resources/windows/icon
 /resources/windows/splash
+
+# Visual Studio Code
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+.history/
+
+# Typescript
+/typings/*

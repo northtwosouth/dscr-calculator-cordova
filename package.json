@@ -53,8 +53,8 @@
       "cordova-plugin-androidx-adapter": {},
       "cordova-plugin-dialogs": {},
       "cordova-plugin-googleplus": {
-        "REVERSED_CLIENT_ID": "com.googleusercontent.apps.711934747211-e69tfjdp0qbdisui3fu3s1tden9h8uj2",
-        "WEB_APPLICATION_CLIENT_ID": "com.googleusercontent.apps.711934747211-9jiqn8i1klq69sodg7ds2td7nt5t6mgu"
+        "REVERSED_CLIENT_ID": "com.googleusercontent.apps.711934747211-krthifqrdef8fgn5hpnoj48hpk85tfea",
+        "WEB_APPLICATION_CLIENT_ID": "711934747211-9jiqn8i1klq69sodg7ds2td7nt5t6mgu.apps.googleusercontent.com"
       }
     },
     "platforms": [

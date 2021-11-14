@@ -268,16 +268,18 @@ function onPressCalculate() {
             window.plugins.googleplus.login(
                 {
                     'scopes': 'profile email', // optional, space-separated list of scopes, If not included or empty, defaults to `profile` and `email`.
-                    'webClientId': 'com.googleusercontent.apps.711934747211-9jiqn8i1klq69sodg7ds2td7nt5t6mgu', // optional clientId of your Web application from Credentials settings of your project - On Android, this MUST be included to get an idToken. On iOS, it is not required.
+                    'webClientId': '711934747211-9jiqn8i1klq69sodg7ds2td7nt5t6mgu.apps.googleusercontent.com', // optional clientId of your Web application from Credentials settings of your project - On Android, this MUST be included to get an idToken. On iOS, it is not required.
                     //   'offline': true // optional, but requires the webClientId - if set to true the plugin will also return a serverAuthCode, which can be used to grant offline access to a non-Google server
                 },
                 function (obj) {
                     console.log('Google login succeeded: ' + JSON.stringify(obj));
+                    setSignupCompleted(false);//XXX
                     toggleDisplayOutputValues(true);
                     sendToHubspot(obj.email, obj.givenName, obj.familyName);
                 },
                 function (msg) {
                     navigator.notification.alert('Google login failed: ' + msg);
+                    setSignupCompleted(false);
                     toggleDisplayOutputValues(false);
                 }
             );//END: `plugins.googleplus.login`
@@ -286,10 +288,11 @@ function onPressCalculate() {
     else if (device.platform.toLowerCase() === 'browser') {
         //XXX TODO: handle web browser case
         sendToHubspot(
-            window.prompt('Email address') || 'ryan+testuser@fake.com',
-            window.prompt('First name') || 'Ryan Test',
-            window.prompt('Last name') || 'User'
+            window.prompt('Please enter your Email Address') || 'ryan+testuser@fake.com',
+            window.prompt('Please enter your First Name') || 'Ryan Test',
+            window.prompt('Please enter your Last Name') || 'User'
         );
+        setSignupCompleted(true);
         toggleDisplayOutputValues(true);
     }
     else {

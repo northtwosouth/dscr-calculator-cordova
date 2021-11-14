@@ -268,7 +268,7 @@ function onPressCalculate() {
             window.plugins.googleplus.login(
                 {
                     'scopes': 'profile email', // optional, space-separated list of scopes, If not included or empty, defaults to `profile` and `email`.
-                    'webClientId': 'com.googleusercontent.apps.1060980760645-q1ugnupkteqo64n34e2kaomrq61m23hd', // optional clientId of your Web application from Credentials settings of your project - On Android, this MUST be included to get an idToken. On iOS, it is not required.
+                    'webClientId': 'com.googleusercontent.apps.711934747211-9jiqn8i1klq69sodg7ds2td7nt5t6mgu', // optional clientId of your Web application from Credentials settings of your project - On Android, this MUST be included to get an idToken. On iOS, it is not required.
                     //   'offline': true // optional, but requires the webClientId - if set to true the plugin will also return a serverAuthCode, which can be used to grant offline access to a non-Google server
                 },
                 function (obj) {

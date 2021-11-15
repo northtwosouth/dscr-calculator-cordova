@@ -1,0 +1,32 @@
+{
+    "ios": {
+        "debug": {
+            "codeSignIdentity": "North 2 South, LLC",
+            "developmentTeam": "DHJW9XWQ2B",
+            "packageType": "development"
+        },
+        "release": {
+            "codeSignIdentity": "North 2 South, LLC",
+            "developmentTeam": "DHJW9XWQ2B",
+            "packageType": "enterprise"
+        }
+    },
+     "android": {
+         "debug": {
+             "keystore": "/Users/runderworld/.android/debug.keystore",
+             "storePassword": "android",
+             "alias": "androiddebugkey",
+             "password" : "android",
+             "keystoreType": "",
+             "packageType": "apk"
+         },
+         "release": {
+             "keystore": "/Users/runderworld/.android/release.keystore",
+             "storePassword": "Be$tTeam#001!",
+             "alias": "alias_name",
+             "password": "Be$tTeam#001!",
+             "keystoreType": "",
+             "packageType": "bundle"
+         }
+     }
+}

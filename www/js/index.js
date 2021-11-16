@@ -217,7 +217,7 @@ function alertNoSignupYet() {
 function sendLocalNotification() {
     window.cordova.plugins.notification.local.schedule({
         title: 'Thanks',
-        text: 'Hope you found the app useful! Be sure to check out our other calculator apps!',
+        text: 'Hope you found our app useful! Be sure to check out our other calculator apps!',
         foreground: true,
     });
 }
@@ -349,7 +349,7 @@ function sendToHubspot(email, firstname, lastname) {
         },
     }).done(function (response, textStatus, jqXHR) {
         console.log('Registration data successfully sent to Hubspot.');
-        sendLocalNotification();
+        // sendLocalNotification();
     }).fail(function (jqXHR, textStatus, errorThrown) {
         console.error('Failed to send registration data to Hubspot: ' + errorThrown);
         //No recourse

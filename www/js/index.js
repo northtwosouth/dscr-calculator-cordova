@@ -17,8 +17,11 @@
     }
 
     //XXX BEGIN: TODO - Not used yet
-    function _alertNeedsSignup() {
-        navigator.notification.alert('Looks like you haven\'t signed in before. Once you sign in, you can view and print your results in the app.');
+    function _alertNeedsSignup(fnCallback) {
+        navigator.notification.alert(
+            'Looks like you haven\'t signed in before. Once you sign in, you can view and print your results in the app.',
+            fnCallback
+        );
     }
 
     function _scheduleLocalNotification() {
@@ -34,26 +37,30 @@
     }
     //XXX END: TODO - Not used yet
 
-    function _toggleDisplayOutputValues(/*optional*/show) {
+    function __toggleDisplayValuesElem(selector, /*optional*/show) {
+        var $elem = $(selector);
+
         if (typeof show === 'undefined') {
-            console.log('Now toggling output values.');
-            $('#outputValuesContainer').toggle();
+            console.log('Now toggling "' + selector + '".');
+            show = $elem.toggle().is(':visible');
         }
         else {
-            console.log('Now ' + (show ? 'showing' : 'hiding') + ' output values.');
-            $('#outputValuesContainer')[show ? 'show' : 'hide']();
+            console.log('Now ' + (show ? 'showing' : 'hiding') + ' "' + selector + '".');
+            $elem[show ? 'show' : 'hide']();
         }
+
+        if (show) {
+            $elem[0].scrollIntoView({ behavior: 'smooth' });
+        }
+        return show;
+    }
+
+    function _toggleDisplayOutputValues(/*optional*/show) {
+        return __toggleDisplayValuesElem('#outputValuesContainer', show);
     }
 
     function _toggleDisplayDebugValues(/*optional*/show) {
-        if (typeof show === 'undefined') {
-            console.log('Now toggling debug values.');
-            $('#debugValuesContainer').toggle();
-        }
-        else {
-            console.log('Now ' + (show ? 'showing' : 'hiding') + ' debug values.');
-            $('#debugValuesContainer')[show ? 'show' : 'hide']();
-        }
+        return __toggleDisplayValuesElem('#debugValuesContainer', show);
     }
 
     function _sendToHubspot(email, firstname, lastname) {
@@ -84,6 +91,71 @@
             //...
         });
     }//END: `_sendToHubspot()`
+
+    function _attemptSignInWithApple() {
+        window.cordova.plugins.SignInWithApple.signin(
+            {
+                requestedScopes: [
+                    0, // FullName
+                    1, // Email
+                ]
+            },
+            function (succ) {
+                var decodedObj = jwt_decode(succ.identityToken);//Only needed when email-masking is used
+                console.log('Apple login succeeded!');
+                console.debug('Raw response: ' + JSON.stringify(succ) + '\nDecoded JWT: ' + JSON.stringify(decodedObj));
+                _sendToHubspot(
+                    succ.email || decodedObj.email,
+                    succ.fullName.givenName,
+                    succ.fullName.familyName
+                );
+            },
+            function (err) {
+                console.error('Apple login failed: ' + JSON.stringify(err));
+                switch (err.code) {
+                    case '1001': // ASAuthorizationErrorCanceled (user cancelled)
+                    case '1003': // ASAuthorizationErrorNotHandled (user cancelled)
+                        _alertSignupFailed();
+                        break;
+                    case '1000': // ASAuthorizationErrorUnknown (authorization attempt failed for an unknown reason)
+                                 // **NOTE: Apple seems to return 1000 when user hasn't logged in on their phone before
+                                 // and the user presses the 'Settings' button to setup Apple ID for the first time.**
+                        _setSignupCompleted(false);
+                        _toggleDisplayOutputValues(true);
+                        //XXX TODO: Do we need to `_alertSignupFailed`?
+                        break;
+                    case '1002': // ASAuthorizationErrorInvalidResponse (authorization request received an invalid response.)
+                    default:     // Unknown error code returned from Apple
+                        //TODO: We'll let them have the results BUT we won't persist the flag that they registered
+                        _setSignupCompleted(false);
+                        _toggleDisplayOutputValues(true);
+                        break;
+                }
+            }
+        );//END: `plugins.SignInWithApple.signin`
+    }//END: `_attemptSignInWithApple()`
+
+    function _attemptSignInWithGoogle() {
+        window.plugins.googleplus.login(//NOTE: Yes, this plugin uses the old `window.plugins` Cordova global
+            {
+                'scopes': 'profile email', // optional, space-separated list of scopes, If not included or empty, defaults to `profile` and `email`.
+                'webClientId': '711934747211-9jiqn8i1klq69sodg7ds2td7nt5t6mgu.apps.googleusercontent.com', // optional clientId of your Web application from Credentials settings of your project - On Android, this MUST be included to get an idToken. On iOS, it is not required.
+                //   'offline': true // optional, but requires the webClientId - if set to true the plugin will also return a serverAuthCode, which can be used to grant offline access to a non-Google server
+            },
+            function (obj) {
+                console.log('Google login succeeded: ' + JSON.stringify(obj));
+                _sendToHubspot(
+                    obj.email,
+                    obj.givenName,
+                    obj.familyName
+                );
+            },
+            function (msg) {
+                navigator.notification.alert('Google login failed: ' + msg);
+                _alertSignupFailed();
+            }
+        );//END: `plugins.googleplus.login`
+    }//END: `_attemptSignInWithGoogle()`
 
     function _toPercent(num) {
         return num/100;
@@ -212,79 +284,34 @@
                 },
                 // Called when form `submit` button fired
                 submitHandler: function (form) {
-                    if (device.platform.toLowerCase() === 'ios') {
-                        if (!_isSignupCompleted()) {
-                            //_alertNeedsSignup();//XXX TODO figure out how to pause here
-                            window.cordova.plugins.SignInWithApple.signin(
-                                {
-                                    requestedScopes: [
-                                        0, // FullName
-                                        1, // Email
-                                    ]
-                                },
-                                function (succ) {
-                                    var decodedObj = jwt_decode(succ.identityToken);//Only needed when email-masking is used
-                                    console.log('Apple login succeeded!');
-                                    console.debug('Raw response: ' + JSON.stringify(succ) + '\nDecoded JWT: ' + JSON.stringify(decodedObj));
-                                    _sendToHubspot(
-                                        succ.email || decodedObj.email,
-                                        succ.fullName.givenName,
-                                        succ.fullName.familyName
-                                    );
-                                },
-                                function (err) {
-                                    console.error('Apple login failed: ' + JSON.stringify(err));
-                                    switch (err.code) {
-                                        case '1001': // ASAuthorizationErrorCanceled (user cancelled)
-                                        case '1003': // ASAuthorizationErrorNotHandled (user cancelled)
-                                            //TODO: Sorry we won't let you have the results, but you can try again
-                                            _alertSignupFailed();
-                                            break;
-                                        case '1000': // ASAuthorizationErrorUnknown (authorization attempt failed for an unknown reason)
-                                                    // **NOTE: Apple seems to return 1000 when user hasn't logged in on their phone before
-                                                    // and the user presses the 'Settings' button to setup Apple ID for the first time.**
-                                        case '1002': // ASAuthorizationErrorInvalidResponse (authorization request received an invalid response.)
-                                        default:     // Unknown error code returned from Apple
-                                            //TODO: We'll let them have the results BUT we won't persist the flag that they registered
-                                            _setSignupCompleted(false);
-                                            _toggleDisplayOutputValues(true);
-                                            break;
-                                    }
-                                }
-                            );//END: `plugins.SignInWithApple.signin`
-                        }//END: `if (!isSignupCompleted())`
+                    var email,
+                        firstName,
+                        lastName;
+
+                    if (_isSignupCompleted()) {
+                        _toggleDisplayOutputValues(true);
+                    }
+                    // Otherwise signup not yet completed, so sign in based on platform
+                    else if (device.platform.toLowerCase() === 'ios') {
+                        //_alertNeedsSignup(_attemptSignInWithApple);//XXX Too many dialogs
+                        _attemptSignInWithApple();
                     }
                     else if (device.platform.toLowerCase() === 'android') {
-                        if (!_isSignupCompleted()) {
-                            //_alertNeedsSignup();//XXX TODO figure out how to pause here
-                            window.plugins.googleplus.login(//NOTE: Yes, this plugin uses the old `window.plugins` Cordova global
-                                {
-                                    'scopes': 'profile email', // optional, space-separated list of scopes, If not included or empty, defaults to `profile` and `email`.
-                                    'webClientId': '711934747211-9jiqn8i1klq69sodg7ds2td7nt5t6mgu.apps.googleusercontent.com', // optional clientId of your Web application from Credentials settings of your project - On Android, this MUST be included to get an idToken. On iOS, it is not required.
-                                    //   'offline': true // optional, but requires the webClientId - if set to true the plugin will also return a serverAuthCode, which can be used to grant offline access to a non-Google server
-                                },
-                                function (obj) {
-                                    console.log('Google login succeeded: ' + JSON.stringify(obj));
-                                    _sendToHubspot(
-                                        obj.email,
-                                        obj.givenName,
-                                        obj.familyName
-                                    );
-                                },
-                                function (msg) {
-                                    navigator.notification.alert('Google login failed: ' + msg);
-                                    _alertSignupFailed();
-                                }
-                            );//END: `plugins.googleplus.login`
-                        }//END: `if (!isSignupCompleted())`
+                        //_alertNeedsSignup(_attemptSignInWithGoogle);//XXX Too many dialogs
+                        _attemptSignInWithGoogle();
                     }
                     else if (device.platform.toLowerCase() === 'browser') {
-                        //XXX TODO: handle web browser case
-                        _sendToHubspot(
-                            window.prompt('Please enter your Email Address') || 'ryan+testuser@fake.com',
-                            window.prompt('Please enter your First Name') || 'Ryan Test',
-                            window.prompt('Please enter your Last Name') || 'User'
-                        );
+                        // Yes, we can use `window.prompt` here
+                        if (
+                            !(email = window.prompt('Please enter your email address')) ||
+                            !(firstName = window.prompt('Please enter your first name')) ||
+                            !(lastName = window.prompt('Please enter your last name'))
+                        ) {
+                            _alertSignupFailed();
+                        }
+                        else {
+                            _sendToHubspot(email, firstName, lastName);
+                        }
                     }
                     else {
                         navigator.notification.alert('Unexpected `device.platform`: ' + device.platform);

@@ -23,6 +23,18 @@ body {
     /* blue 006199   green 45ba01 */
 }
 
+#headerLogoContainer {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 0 5px;
+    width: 110px;
+    border-radius: 10px;
+    background-color: #fff;
+}
+#headerLogoContainer img {
+    width: 100px;
+}
+
 /* Landscape layout (with min-width) */
 @media screen and (min-aspect-ratio: 1/1) and (min-width:400px) {
     #app {

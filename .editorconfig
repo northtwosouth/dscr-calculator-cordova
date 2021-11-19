@@ -1,0 +1,10 @@
+root = true
+
+[*]
+end_of_line = lf
+
+[package.json]
+insert_final_newline = true
+
+[*.{js,ts,html}]
+trim_trailing_whitespace = true

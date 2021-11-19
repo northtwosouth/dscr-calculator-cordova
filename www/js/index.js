@@ -119,10 +119,11 @@
                         break;
                     case '1000': // ASAuthorizationErrorUnknown (authorization attempt failed for an unknown reason)
                                  // **NOTE: Apple seems to return 1000 when user hasn't logged in on their phone before
-                                 // and the user presses the 'Settings' button to setup Apple ID for the first time.**
+                                 // and the user presses 'Settings' buttons to setup Apple ID for the first time (or
+                                 // even when he presses 'Close' instead to dismiss it).**
                         _setSignupCompleted(false);
-                        _toggleDisplayOutputValues(true);
-                        //XXX TODO: Do we need to `_alertSignupFailed`?
+                        _toggleDisplayOutputValues(false);
+                        // But don't alert user, because he might be in the middle of configuring his phone
                         break;
                     case '1002': // ASAuthorizationErrorInvalidResponse (authorization request received an invalid response.)
                     default:     // Unknown error code returned from Apple

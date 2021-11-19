@@ -256,7 +256,7 @@
                     numUnits: {
                         required: true,
                         digits: true,
-                        range: [1, 99999],
+                        range: [1, 4],
                     },
                     purposeOfLoan: {
                         required: true,

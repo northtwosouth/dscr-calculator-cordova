@@ -6,7 +6,7 @@
   "main": "index.js",
   "scripts": {
     "start": "npm run start:ios",
-    "start:ios": "cordova run ios",
+    "start:ios": "cordova run ios --target='iPhone-11-Pro-Max, 13.7'",
     "start:android": "cordova run android",
     "start:browser": "cordova run browser",
     "dev": "npm run dev:ios",

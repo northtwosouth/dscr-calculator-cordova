@@ -365,294 +365,304 @@
                                 </div>
                             </div>
 
-                            <!-- BEGIN: OUTPUT VALUES -->
-                            <div id="outputValuesContainer" style="display:none;">
-                                <hr>
-                                <div class="form-group form-group-lg bg-info">
-                                    <label
-                                        for="outLtvRatio"
-                                        class="control-label col-sm-6"
-                                    >Loan-to-Value (LTV) Ratio</label>
-                                    <div class="col-sm-6">
-                                        <!-- <div class="input-group"> -->
-                                        <input
-                                            id="outLtvRatio"
-                                            name="outLtvRatio"
-                                            type="text"
-                                            class="form-control"
-                                            readonly
-                                            disabled
-                                            data-cell="C16"
-                                            data-formula="+E12/E11"
-                                            data-format="0.00%"
-                                        >
-                                        <!-- <div class="input-group-addon">%</div> -->
-                                        <!-- </div> -->
+                            <!-- BEGIN: OUTPUT VALUES (yes, panel styles are hacks) -->
+                            <div
+                                id="outputValuesContainer"
+                                class="panel panel-success alert-success"
+                                style="display:none;"
+                            >
+                                <div class="panel-body bg-success">
+                                    <div class="form-group form-group-lg">
+                                        <label
+                                            for="outLtvRatio"
+                                            class="control-label col-sm-6"
+                                        >Loan-to-Value (LTV) Ratio</label>
+                                        <div class="col-sm-6">
+                                            <!-- <div class="input-group"> -->
+                                            <input
+                                                id="outLtvRatio"
+                                                name="outLtvRatio"
+                                                type="text"
+                                                class="form-control form-control-plaintext output-value-xl"
+                                                readonly
+                                                disabled
+                                                data-cell="C16"
+                                                data-formula="+E12/E11"
+                                                data-format="0.00%"
+                                            >
+                                            <!-- <div class="input-group-addon">%</div> -->
+                                            <!-- </div> -->
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="form-group form-group-lg bg-info">
-                                    <label
-                                        for="outEstIntRate"
-                                        class="control-label col-sm-6"
-                                    >Estimated Interest Rate</label>
-                                    <div class="col-sm-6">
-                                        <!-- <div class="input-group"> -->
-                                        <input
-                                            id="outEstIntRate"
-                                            name="outEstIntRate"
-                                            type="text"
-                                            readonly
-                                            disabled
-                                            class="form-control"
-                                            data-cell="C17"
-                                            data-formula="+K23"
-                                            data-format="0.00%"
-                                        >
-                                        <!-- <div class="input-group-addon">%</div> -->
-                                        <!-- </div> -->
+                                    <div class="form-group form-group-lg">
+                                        <label
+                                            for="outEstIntRate"
+                                            class="control-label col-sm-6"
+                                        >Estimated Interest Rate</label>
+                                        <div class="col-sm-6">
+                                            <!-- <div class="input-group"> -->
+                                            <input
+                                                id="outEstIntRate"
+                                                name="outEstIntRate"
+                                                type="text"
+                                                readonly
+                                                disabled
+                                                class="form-control form-control-plaintext output-value-xl"
+                                                data-cell="C17"
+                                                data-formula="+K23"
+                                                data-format="0.00%"
+                                            >
+                                            <!-- <div class="input-group-addon">%</div> -->
+                                            <!-- </div> -->
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="form-group form-group-lg bg-info">
-                                    <label
-                                        for="outPrincipalAndInterest"
-                                        class="control-label col-sm-6"
-                                    >Principal &amp; Interest</label>
-                                    <div class="col-sm-6">
-                                        <!-- <div class="input-group"> -->
-                                        <!-- <div class="input-group-addon">$</div> -->
-                                        <input
-                                            id="outPrincipalAndInterest"
-                                            name="outPrincipalAndInterest"
-                                            type="text"
-                                            readonly
-                                            disabled
-                                            class="form-control"
-                                            data-cell="E17"
-                                            data-formula="IF(K25='Error','Error',PMT(K25/12,360,E12,0,1)*-1)"
-                                            data-format="\$0,0"
-                                        >
-                                        <!-- <div class="input-group-addon">.00</div> -->
-                                        <!-- </div> -->
+                                    <div class="form-group form-group-lg">
+                                        <label
+                                            for="outPrincipalAndInterest"
+                                            class="control-label col-sm-6"
+                                        >Principal &amp; Interest</label>
+                                        <div class="col-sm-6">
+                                            <!-- <div class="input-group"> -->
+                                            <!-- <div class="input-group-addon">$</div> -->
+                                            <input
+                                                id="outPrincipalAndInterest"
+                                                name="outPrincipalAndInterest"
+                                                type="text"
+                                                readonly
+                                                disabled
+                                                class="form-control form-control-plaintext output-value-xl"
+                                                data-cell="E17"
+                                                data-formula="IF(K25='Error','Error',PMT(K25/12,360,E12,0,1)*-1)"
+                                                data-format="\$0,0"
+                                            >
+                                            <!-- <div class="input-group-addon">.00</div> -->
+                                            <!-- </div> -->
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="form-group form-group-lg bg-info">
-                                    <label
-                                        for="outSubjectPiti"
-                                        class="control-label col-sm-6"
-                                    >Subject Property Combined Payment (PITI)</label>
-                                    <div class="col-sm-6">
-                                        <!-- <div class="input-group"> -->
-                                        <!-- <div class="input-group-addon">$</div> -->
-                                        <input
-                                            id="outSubjectPiti"
-                                            name="outSubjectPiti"
-                                            type="text"
-                                            readonly
-                                            disabled
-                                            class="form-control"
-                                            data-cell="E18"
-                                            data-formula="SUM(E14:E17)"
-                                            data-format="$0,0"
-                                        >
-                                        <!-- <div class="input-group-addon">.00</div> -->
-                                        <!-- </div>  -->
+                                    <div class="form-group form-group-lg">
+                                        <label
+                                            for="outSubjectPiti"
+                                            class="control-label col-sm-6"
+                                        >Subject Property Combined Payment (PITI)</label>
+                                        <div class="col-sm-6">
+                                            <!-- <div class="input-group"> -->
+                                            <!-- <div class="input-group-addon">$</div> -->
+                                            <input
+                                                id="outSubjectPiti"
+                                                name="outSubjectPiti"
+                                                type="text"
+                                                readonly
+                                                disabled
+                                                class="form-control form-control-plaintext output-value-xl"
+                                                data-cell="E18"
+                                                data-formula="SUM(E14:E17)"
+                                                data-format="$0,0"
+                                            >
+                                            <!-- <div class="input-group-addon">.00</div> -->
+                                            <!-- </div>  -->
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="form-group form-group-lg bg-info">
-                                    <label
-                                        for="outDscrValue"
-                                        class="control-label col-sm-6"
-                                    >Debt Service Coverage Ratio (DSCR)</label>
-                                    <div class="col-sm-6">
-                                        <input
-                                            id="outDscrValue"
-                                            name="outDscrValue"
-                                            type="text"
-                                            class="form-control"
-                                            readonly
-                                            disabled
-                                            data-formula="IF(K17='NA','Error',+E13/E18)"
-                                            data-format="0.00"
-                                        >
+                                    <div class="form-group form-group-lg">
+                                        <label
+                                            for="outDscrValue"
+                                            class="control-label col-sm-6"
+                                        >Debt Service Coverage Ratio (DSCR)</label>
+                                        <div class="col-sm-6">
+                                            <input
+                                                id="outDscrValue"
+                                                name="outDscrValue"
+                                                type="text"
+                                                class="form-control form-control-plaintext output-value-xxl"
+                                                readonly
+                                                disabled
+                                                data-formula="IF(K17='NA','Error',+E13/E18)"
+                                                data-format="0.00"
+                                            >
+                                        </div>
                                     </div>
-                                </div>
-                            </div><!-- /#outputValuesContainer -->
+                                </div><!--/.panel-body -->
+                            </div><!-- /#outputValuesContainer.panel -->
                             <!-- END: OUTPUT VALUES -->
 
-                            <!-- XXX BEGIN: DEBUG VALUES -->
-                            <div id="debugValuesContainer" style="display:none;">
-                                <hr>
-                                <div class="form-group form-group-lg bg-danger">
-                                    <label
-                                        for="hidABS_Score"
-                                        class="control-label col-sm-6"
-                                    >ABS_Score</label>
-                                    <div class="col-sm-6">
-                                        <input
-                                            id="hidABS_Score"
-                                            name="hidABS_Score"
-                                            type="text"
-                                            class="form-control"
-                                            readonly
-                                            disabled
-                                            data-cell="K14"
-                                        >
+                            <!-- XXX BEGIN: DEBUG VALUES (yes, panel styles are hacks) -->
+                            <div
+                                id="debugValuesContainer"
+                                class="panel panel-warning alert-warning"
+                                style="display:none;"
+                            >
+                                <div class="panel-body bg-warning">
+                                    <div class="form-group form-group-lg">
+                                        <label
+                                            for="hidABS_Score"
+                                            class="control-label col-sm-6"
+                                        >ABS_Score</label>
+                                        <div class="col-sm-6">
+                                            <input
+                                                id="hidABS_Score"
+                                                name="hidABS_Score"
+                                                type="text"
+                                                class="form-control form-control-plaintext"
+                                                readonly
+                                                disabled
+                                                data-cell="K14"
+                                            >
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="form-group form-group-lg bg-danger">
-                                    <label
-                                        for="hidABS_LTV"
-                                        class="control-label col-sm-6"
-                                    >ABS_LTV</label>
-                                    <div class="col-sm-6">
-                                        <input
-                                            id="hidABS_LTV"
-                                            name="hidABS_LTV"
-                                            type="text"
-                                            class="form-control"
-                                            readonly
-                                            disabled
-                                            data-cell="K15"
-                                        >
+                                    <div class="form-group form-group-lg">
+                                        <label
+                                            for="hidABS_LTV"
+                                            class="control-label col-sm-6"
+                                        >ABS_LTV</label>
+                                        <div class="col-sm-6">
+                                            <input
+                                                id="hidABS_LTV"
+                                                name="hidABS_LTV"
+                                                type="text"
+                                                class="form-control form-control-plaintext"
+                                                readonly
+                                                disabled
+                                                data-cell="K15"
+                                            >
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="form-group form-group-lg bg-danger">
-                                    <label
-                                        for="hidBase_Rate"
-                                        class="control-label col-sm-6"
-                                    >Base_Rate</label>
-                                    <div class="col-sm-6">
-                                        <input
-                                            id="hidBase_Rate"
-                                            name="hidBase_Rate"
-                                            type="text"
-                                            class="form-control"
-                                            readonly
-                                            disabled
-                                            data-cell="K17"
-                                        >
+                                    <div class="form-group form-group-lg">
+                                        <label
+                                            for="hidBase_Rate"
+                                            class="control-label col-sm-6"
+                                        >Base_Rate</label>
+                                        <div class="col-sm-6">
+                                            <input
+                                                id="hidBase_Rate"
+                                                name="hidBase_Rate"
+                                                type="text"
+                                                class="form-control form-control-plaintext"
+                                                readonly
+                                                disabled
+                                                data-cell="K17"
+                                            >
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="form-group form-group-lg bg-danger">
-                                    <label
-                                        for="hidTWO_to_FOUR_Units"
-                                        class="control-label col-sm-6"
-                                    >TWO_to_FOUR_Units</label>
-                                    <div class="col-sm-6">
-                                        <input
-                                            id="hidTWO_to_FOUR_Units"
-                                            name="hidTWO_to_FOUR_Units"
-                                            type="text"
-                                            class="form-control"
-                                            readonly
-                                            disabled
-                                            data-cell="K19"
-                                        >
+                                    <div class="form-group form-group-lg">
+                                        <label
+                                            for="hidTWO_to_FOUR_Units"
+                                            class="control-label col-sm-6"
+                                        >TWO_to_FOUR_Units</label>
+                                        <div class="col-sm-6">
+                                            <input
+                                                id="hidTWO_to_FOUR_Units"
+                                                name="hidTWO_to_FOUR_Units"
+                                                type="text"
+                                                class="form-control form-control-plaintext"
+                                                readonly
+                                                disabled
+                                                data-cell="K19"
+                                            >
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="form-group form-group-lg bg-danger">
-                                    <label
-                                        for="hidIO"
-                                        class="control-label col-sm-6"
-                                    >IO</label>
-                                    <div class="col-sm-6">
-                                        <input
-                                            id="hidIO"
-                                            name="hidIO"
-                                            type="text"
-                                            class="form-control"
-                                            readonly
-                                            disabled
-                                            data-cell="K20"
-                                        >
+                                    <div class="form-group form-group-lg">
+                                        <label
+                                            for="hidIO"
+                                            class="control-label col-sm-6"
+                                        >IO</label>
+                                        <div class="col-sm-6">
+                                            <input
+                                                id="hidIO"
+                                                name="hidIO"
+                                                type="text"
+                                                class="form-control form-control-plaintext"
+                                                readonly
+                                                disabled
+                                                data-cell="K20"
+                                            >
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="form-group form-group-lg bg-danger">
-                                    <label
-                                        for="hidNo_DSCR"
-                                        class="control-label col-sm-6"
-                                    >No_DSCR</label>
-                                    <div class="col-sm-6">
-                                        <input
-                                            id="hidNo_DSCR"
-                                            name="hidNo_DSCR"
-                                            type="text"
-                                            class="form-control"
-                                            readonly
-                                            disabled
-                                            data-cell="K21"
-                                        >
+                                    <div class="form-group form-group-lg">
+                                        <label
+                                            for="hidNo_DSCR"
+                                            class="control-label col-sm-6"
+                                        >No_DSCR</label>
+                                        <div class="col-sm-6">
+                                            <input
+                                                id="hidNo_DSCR"
+                                                name="hidNo_DSCR"
+                                                type="text"
+                                                class="form-control form-control-plaintext"
+                                                readonly
+                                                disabled
+                                                data-cell="K21"
+                                            >
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="form-group form-group-lg bg-danger">
-                                    <label
-                                        for="hidCashOut"
-                                        class="control-label col-sm-6"
-                                    >CashOut</label>
-                                    <div class="col-sm-6">
-                                        <input
-                                            id="hidCashOut"
-                                            name="hidCashOut"
-                                            type="text"
-                                            class="form-control"
-                                            readonly
-                                            disabled
-                                            data-cell="K22"
-                                        >
+                                    <div class="form-group form-group-lg">
+                                        <label
+                                            for="hidCashOut"
+                                            class="control-label col-sm-6"
+                                        >CashOut</label>
+                                        <div class="col-sm-6">
+                                            <input
+                                                id="hidCashOut"
+                                                name="hidCashOut"
+                                                type="text"
+                                                class="form-control form-control-plaintext"
+                                                readonly
+                                                disabled
+                                                data-cell="K22"
+                                            >
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="form-group form-group-lg bg-danger">
-                                    <label
-                                        for="hidNet_BPC_Rate"
-                                        class="control-label col-sm-6"
-                                    >Net_BPC_Rate</label>
-                                    <div class="col-sm-6">
-                                        <input
-                                            id="hidNet_BPC_Rate"
-                                            name="hidNet_BPC_Rate"
-                                            type="text"
-                                            class="form-control"
-                                            readonly
-                                            disabled
-                                            data-cell="K23"
-                                        >
+                                    <div class="form-group form-group-lg">
+                                        <label
+                                            for="hidNet_BPC_Rate"
+                                            class="control-label col-sm-6"
+                                        >Net_BPC_Rate</label>
+                                        <div class="col-sm-6">
+                                            <input
+                                                id="hidNet_BPC_Rate"
+                                                name="hidNet_BPC_Rate"
+                                                type="text"
+                                                class="form-control form-control-plaintext"
+                                                readonly
+                                                disabled
+                                                data-cell="K23"
+                                            >
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="form-group form-group-lg bg-danger">
-                                    <label
-                                        for="hidLPC_Add"
-                                        class="control-label col-sm-6"
-                                    >LPC_Add</label>
-                                    <div class="col-sm-6">
-                                        <input
-                                            id="hidLPC_Add"
-                                            name="hidLPC_Add"
-                                            type="text"
-                                            class="form-control"
-                                            readonly
-                                            disabled
-                                            data-cell="K24"
-                                        >
+                                    <div class="form-group form-group-lg">
+                                        <label
+                                            for="hidLPC_Add"
+                                            class="control-label col-sm-6"
+                                        >LPC_Add</label>
+                                        <div class="col-sm-6">
+                                            <input
+                                                id="hidLPC_Add"
+                                                name="hidLPC_Add"
+                                                type="text"
+                                                class="form-control form-control-plaintext"
+                                                readonly
+                                                disabled
+                                                data-cell="K24"
+                                            >
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="form-group form-group-lg bg-danger">
-                                    <label
-                                        for="hidNet_LPC_Rate"
-                                        class="control-label col-sm-6"
-                                    >Net_LPC_Rate</label>
-                                    <div class="col-sm-6">
-                                        <input
-                                            id="hidNet_LPC_Rate"
-                                            name="hidNet_LPC_Rate"
-                                            type="text"
-                                            class="form-control"
-                                            readonly
-                                            disabled
-                                            data-cell="K25"
-                                        >
+                                    <div class="form-group form-group-lg">
+                                        <label
+                                            for="hidNet_LPC_Rate"
+                                            class="control-label col-sm-6"
+                                        >Net_LPC_Rate</label>
+                                        <div class="col-sm-6">
+                                            <input
+                                                id="hidNet_LPC_Rate"
+                                                name="hidNet_LPC_Rate"
+                                                type="text"
+                                                class="form-control form-control-plaintext"
+                                                readonly
+                                                disabled
+                                                data-cell="K25"
+                                            >
+                                        </div>
                                     </div>
-                                </div>
-                            </div><!-- /#debugValuesContainer -->
+                                </div><!--/.panel-body -->
+                            </div><!-- /#debugValuesContainer.panel -->
                             <!-- XXX END: DEBUG VALUES -->
                         </form>
                     </div>

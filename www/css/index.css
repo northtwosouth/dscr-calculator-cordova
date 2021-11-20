@@ -7,8 +7,6 @@ body {
     -webkit-text-size-adjust: none;             /* prevent webkit from resizing text to fit */
     -webkit-user-select: none;                  /* prevent copy paste, to allow, change 'none' to 'text' */
     background-color: #efefef;
-    /* font-family: system-ui, -apple-system, -apple-system-font, 'Segoe UI', 'Roboto', sans-serif; */
-    /* font-size: 12px; */
     height: 100vh;
     width: 100%;
     margin: 0px;
@@ -20,7 +18,7 @@ body {
 /* Portrait layout (default) */
 #app {
     /* TBD */
-    /* blue 006199   green 45ba01 */
+    /* TFG color palette: blue #006199 / green #45ba01 */
 }
 
 #headerLogoContainer {
@@ -45,3 +43,38 @@ body {
 @media screen and (prefers-color-scheme: dark) {
     /* TBD */
 }
+
+/* BEGIN: Adapt from TWBS 4.x */
+.form-control.form-control-plaintext {
+    margin-bottom: 0; /* match inputs if this class comes on inputs with default margins */
+    color: #555;
+    background-color: transparent !important;/* force this to override `[disabled]` */
+    border: solid transparent;
+    border-width: 1px 0;
+    box-shadow: none;/* override `[disabled]` */
+    cursor: default;/* override `[disabled]` */
+}
+.form-group-lg .form-control.form-control-plaintext,
+.form-control.form-control-plaintext.input-lg,
+.form-group-sm .form-control.form-control-plaintext,
+.form-control.form-control-plaintext.input-sm {
+    padding-right: 0;
+    padding-left: 0;
+}
+/* END: Adapt from TWBS 4.x */
+
+/* BEGIN: Fix TWBS 3.x shortcomings */
+.panel .form-group:last-child {
+    margin-bottom: 0;
+}
+/* END: Fix TWBS 3.x shortcomings */
+
+
+/* BEGIN: Extend TWBS */
+.form-control.form-control-plaintext.output-value-xl {
+    font-size: 175%;
+}
+.form-control.form-control-plaintext.output-value-xxl {
+    font-size: 250%;/* XXX Any larger and Webkit breaks */
+}
+/* END: Extend TWBS */

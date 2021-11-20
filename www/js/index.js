@@ -169,10 +169,6 @@
     document.addEventListener('deviceready', function () {
         console.log('Running cordova-' + window.cordova.platformId + '@' + window.cordova.version);
 
-        $('#debugValuesDisplayToggle').on('click', function () {
-            _toggleDisplayDebugValues();
-        });
-
         $(function () {
             var _ERR_MSG_PERCENT = 'Please enter a valid percentage (up to two decimal places)';
             var _ERR_MSG_DOLLAR = 'Please enter a valid dollar amount';
@@ -386,6 +382,11 @@
                 },//END: `data`
                 // onAfterCalculate: function () { /* ... */ }
             });//END: `$(...).calx()`
+
+            // Configure debug display toggle button
+            $('#debugValuesDisplayToggle').on('click', function () {
+                _toggleDisplayDebugValues();
+            });
         });
     }, false);//END: `deviceready`
 })(jQuery, window);

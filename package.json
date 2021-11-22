@@ -1,7 +1,7 @@
 {
   "name": "com.northtwosouth.apps.DscrCalculator",
   "displayName": "DSCR Calculator",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "DSCR (Debt Service Coverage Ratio) Calculator provided by Truss Financial Group.",
   "main": "index.js",
   "scripts": {

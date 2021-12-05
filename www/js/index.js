@@ -152,7 +152,7 @@
                 );
             },
             function (msg) {
-                navigator.notification.alert('Google login failed: ' + msg);
+                console.error('Google login failed: ' + msg);
                 _alertSignupFailed();
             }
         );//END: `plugins.googleplus.login`

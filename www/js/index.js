@@ -244,6 +244,9 @@
                     propertyAddress2: {
                         required: true,
                     },
+                    propertyState: {
+                        required: true,
+                    },
                     ficoScore: {
                         required: true,
                         digits: true,
@@ -252,8 +255,6 @@
                     },
                     numUnits: {
                         required: true,
-                        digits: true,
-                        range: [1, 4],
                     },
                     purposeOfLoan: {
                         required: true,
@@ -272,12 +273,9 @@
                     // outPrincipalAndInterest: _OPTS_DOLLAR_AMT,
                     // outSubjectPiti: _OPTS_DOLLAR_AMT,
                 },
-                // Define validation error messages
+                // Override validation error messages
                 messages: {
-                    XXX: {
-                        XXX: _ERR_MSG_DOLLAR,
-                    },
-                    YYY: 'YYY',
+                    //...
                 },
                 // Called when form `submit` button fired
                 submitHandler: function (form) {
@@ -351,8 +349,8 @@
                         // formula: 'VLOOKUP(K14, K6:Q12, MATCH(K15, K5:Q5, 0), FALSE)',
                         format: '0.000%',
                     },
-                    K19: {//TWO_to_FOUR_Units
-                        formula: 'IF(C14>=2,0.25%,0)',
+                    K19: {//FIVE_to_EIGHT_Units
+                        formula: 'IF(C14="5-8",0.25%,0)',
                         format: '0.000%',
                     },
                     K20: {//IO

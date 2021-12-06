@@ -41,6 +41,7 @@
                             class="form-horizontal"
                             action=""
                         >
+                        <!-- XXX BEGIN: Removed
                             <div class="form-group form-group-lg">
                                 <label
                                     for="borrowerName"
@@ -89,6 +90,23 @@
                                     >
                                 </div>
                             </div>
+                        XXX END: Removed -->
+                            <div class="form-group form-group-lg">
+                                <label
+                                    for="propertyState"
+                                    class="control-label col-sm-6"
+                                >Subject Property State</label>
+                                <div class="col-sm-6">
+                                    <input
+                                        id="propertyState"
+                                        name="propertyState"
+                                        type="text"
+                                        required="required"
+                                        class="form-control"
+                                        value="CA"
+                                    >
+                                </div>
+                            </div>
                             <div class="form-group form-group-lg">
                                 <label
                                     for="ficoScore"
@@ -110,18 +128,23 @@
                                 <label
                                     for="numUnits"
                                     class="control-label col-sm-6"
-                                ># of Units</label>
+                                >Subject Property # of Units</label>
                                 <div class="col-sm-6">
-                                    <input
+                                    <select
                                         id="numUnits"
                                         name="numUnits"
-                                        type="number"
-                                        inputmode="numeric"
-                                        class="form-control"
-                                        step="1"
-                                        value="1"
+                                        required="required"
+                                        class="select form-control"
                                         data-cell="C14"
                                     >
+                                        <option
+                                            value="1-4"
+                                            selected
+                                        >1-4 units</option>
+                                        <option
+                                            value="5-8"
+                                        >5-8 units</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="form-group form-group-lg">
@@ -308,8 +331,7 @@
                             </div>
                             <div class="form-group form-group-lg">
                                 <div class="col-sm-6 col-sm-offset-6">
-                                    <!-- NOTE: `.input-lg` hack -->
-                                    <div class="checkbox input-lg">
+                                    <div class="checkbox">
                                         <label>
                                             <input
                                                 type="checkbox"
@@ -329,8 +351,7 @@
                             </div>
                             <div class="form-group form-group-lg">
                                 <div class="col-sm-6 col-sm-offset-6">
-                                    <!-- NOTE: `.input-lg` hack -->
-                                    <div class="checkbox input-lg">
+                                    <div class="checkbox">
                                         <label>
                                             <input
                                                 type="checkbox"
@@ -356,10 +377,14 @@
                                     >Calculate</button>
                                 </div>
                                 <div class="col-xs-12 col-sm-9 small">
-                                    <p class="text-justify" style="margin-top:15px;">
-                                        The illustration shown above is for investment properties only, therefore this loan will be deemed for Business Purpose
-                                        Only. The rate and terms listed above are not a binding agreement by Truss Financial Group as there are other factors to
-                                        be considered upon application and evaluation of the subject property. <span id="debugValuesDisplayToggle">•••</span>
+                                    <p class="text-justify">
+                                        The illustration above is for Business Purpose Loans only which are those
+                                        properties that are tenant occupied, 1-8 Units and generate income, as
+                                        defined by the CFPB as an exempt transaction under section 1026.30 of
+                                        Reg Z of the Truth in Lending Act. Therefore, this is not a consumer
+                                        direct home loan.  The chart above shows results based on the guidelines
+                                        and pricing average of the very top lenders in the United States, this is
+                                        not a quote from any one Lender in particular. <span id="debugValuesDisplayToggle">•••</span>
                                     </p>
                                 </div>
                             </div>
@@ -543,13 +568,13 @@
                                     </div>
                                     <div class="form-group form-group-lg">
                                         <label
-                                            for="hidTWO_to_FOUR_Units"
+                                            for="hidFIVE_to_EIGHT_Units"
                                             class="control-label col-sm-6"
-                                        >TWO_to_FOUR_Units</label>
+                                        >FIVE_to_EIGHT_Units</label>
                                         <div class="col-sm-6">
                                             <input
-                                                id="hidTWO_to_FOUR_Units"
-                                                name="hidTWO_to_FOUR_Units"
+                                                id="hidFIVE_to_EIGHT_Units"
+                                                name="hidFIVE_to_EIGHT_Units"
                                                 type="text"
                                                 class="form-control form-control-plaintext"
                                                 readonly

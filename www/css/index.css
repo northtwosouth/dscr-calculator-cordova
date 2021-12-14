@@ -20,17 +20,23 @@ body {
     /* TBD */
     /* TFG color palette: blue #006199 / green #45ba01 */
 }
-
-#headerLogoContainer {
-    display: inline-block;
+#sponsorship {
     margin-top: 20px;
+    margin-bottom: 20px;
+}
+#sponsorLogoContainer {
+    display: inline-block;
+    margin-bottom: 2px;
     padding: 0 5px;
     width: 110px;
     border-radius: 10px;
     background-color: #fff;
 }
-#headerLogoContainer img {
+#sponsorLogoContainer img {
     width: 100px;
+}
+#disclaimer {
+    font-style: italic;
 }
 
 /* Landscape layout (with min-width) */

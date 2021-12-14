@@ -221,7 +221,7 @@
                     } else {
                         error.insertAfter(element);
                     }
-                }
+                },
             }); //END: `$.validator.setDefaults(...)`
 
             // Prevent form submissions on <Enter> key

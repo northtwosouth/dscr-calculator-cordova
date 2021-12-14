@@ -25,14 +25,9 @@
     <body>
         <div id="app">
             <div class="container">
-                <div class="text-center">
-                    <div id="headerLogoContainer" class="text-center">
-                        <img src="img/logo-sq-alpha.png">
-                    </div>
-                </div>
                 <h1 class="text-center">
                     DSCR Calculator
-                    <div><small>Call <a href="tel:+18888787715">888-878-7715</a> for assistance</small></span>
+                    <!-- <div><small></small></span> -->
                 </h1>
                 <div class="row">
                     <div class="col-xs-12">
@@ -418,23 +413,12 @@
                                 </div>
                             </div>
                             <div class="form-group row small">
-                                <div class="col-xs-12 col-sm-3 text-center">
+                                <div class="col-xs-12 text-center">
                                     <button
                                         name="submit"
                                         type="submit"
                                         class="btn btn-block btn-lg btn-success"
                                     >Calculate</button>
-                                </div>
-                                <div class="col-xs-12 col-sm-9 small">
-                                    <p class="text-justify">
-                                        The illustration above is for Business Purpose Loans only which are those
-                                        properties that are tenant occupied, 1-8 Units and generate income, as
-                                        defined by the CFPB as an exempt transaction under section 1026.30 of
-                                        Reg Z of the Truth in Lending Act. Therefore, this is not a consumer
-                                        direct home loan.  The chart above shows results based on the guidelines
-                                        and pricing average of the very top lenders in the United States, this is
-                                        not a quote from any one Lender in particular. <span id="debugValuesDisplayToggle">•••</span>
-                                    </p>
                                 </div>
                             </div>
 
@@ -738,10 +722,43 @@
                             </div><!-- /#debugValuesContainer.panel -->
                             <!-- XXX END: DEBUG VALUES -->
                         </form>
-                    </div>
-                </div>
-            </div>
-        </div>
+                    </div><!-- /.col-* -->
+                </div><!-- /.row -->
+
+                <div id="sponsorship" class="row">
+                    <div class="col-xs-12">
+                        <div class="text-center">
+                            <div class="text-uppercase small">
+                                Sponsored by
+                            </div>
+                            <div id="sponsorLogoContainer" class="text-center">
+                                <img src="img/logo-sq-alpha.png">
+                                <span class="sr-only">Truss Financial Group</span>
+                            </div>
+                        </div>
+                    </div><!-- /.col-* -->
+                    <div class="col-xs-12 text-center">
+                        <p class="text-uppercase small">
+                            Call <a href="tel:+18888787715">888-878-7715</a> for assistance
+                        </p>
+                    </div><!-- /.col-* -->
+                </div><!-- /.row -->
+
+                <div id="disclaimer" class="row">
+                    <div class="col-xs-12 small">
+                        <p class="text-justify">
+                            The illustration above is for Business Purpose Loans only which are those
+                            properties that are tenant occupied, 1-8 Units and generate income, as
+                            defined by the CFPB as an exempt transaction under section 1026.30 of
+                            Reg Z of the Truth in Lending Act. Therefore, this is not a consumer
+                            direct home loan.  The chart above shows results based on the guidelines
+                            and pricing average of the very top lenders in the United States, this is
+                            not a quote from any one Lender in particular. <span id="debugValuesDisplayToggle">•••</span>
+                        </p>
+                    </div><!-- /.col-* -->
+                </div><!-- /.row -->
+            </div><!-- /.container -->
+        </div><!-- #app -->
 
         <!-- 1. platform -->
         <script src="cordova.js"></script>

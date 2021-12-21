@@ -20,27 +20,23 @@ body {
     /* TBD */
     /* TFG color palette: blue #006199 / green #45ba01 */
 }
-#sponsorship {
-    margin-top: 20px;
-    margin-bottom: 20px;
+.passFailDesc h3 {
+    margin-top: 0;
 }
 #sponsorLogoContainer {
     display: inline-block;
-    margin-bottom: 2px;
-    padding: 0 5px;
-    width: 110px;
+    margin-bottom: 4px;
     border-radius: 10px;
     background-color: #fff;
 }
 #sponsorLogoContainer img {
     width: 100px;
 }
+#adOpportunities {
+    margin-bottom: 15px;
+}
 #disclaimer {
     font-style: italic;
-}
-
-.passFailDesc h3 {
-    margin-top: 0;
 }
 
 /* Landscape layout (with min-width) */
@@ -74,7 +70,8 @@ body {
 /* END: Adapt from TWBS 4.x */
 
 /* BEGIN: Fix TWBS 3.x shortcomings */
-.panel .form-group:last-child {
+.panel .form-group:last-child,
+p:last-child {
     margin-bottom: 0;
 }
 /* END: Fix TWBS 3.x shortcomings */

@@ -1,5 +1,35 @@
 (function ($, window, undefined) {
 
+    function _checkForMinDscrErr() {
+        var isCashOut = $('#purposeOfLoan').val() === 'Cashout';
+        var minFico = isCashOut ? 680 : 700;
+        var maxLtv = isCashOut ? 70 : 75;
+        var outDscrValueResult = $('form#calxForm').calx('evaluate', "IF(K17='NA','Error',+E13/E18)");
+        console.log('_checkForMinDscrErr()', 'outDscrValue: ' + $('#outDscrValue').val() +
+            ' ; outDscrValueResult: ' + outDscrValueResult +
+            ' ; ficoScore: ' + $('#ficoScore').val() +
+            ' ; outLtvRatio: ' + $('#outLtvRatio').val());
+        console.log('_checkForMinDscrErr()', 'isCashOut: ' + isCashOut + ' ; minFico: ' + minFico + ' ; maxLtv: ' + maxLtv);
+        // There is a bug in Calx.js that prevents `outDscrValue` from being reliably computed each time
+        var hasMinDscrErr = (parseFloat(outDscrValueResult) < 1) && (
+            (parseInt($('#ficoScore').val()) < minFico) || (parseFloat($('#outLtvRatio').val()) > maxLtv)
+        );
+        console.log('_checkForMinDscrErr()', 'hasMinDscrErr ==> ' + hasMinDscrErr);
+        var $errBlockElem = $('#outDscrValueErrBlock');
+        $errBlockElem.text('The minimum acceptable DSCR is 1.00 if either FICO Score is less than ' + minFico + ' or LTV is greater than ' + maxLtv + '%');
+        $errBlockElem[hasMinDscrErr ? 'show' : 'hide']();
+        var $outValuesElem = $('#outputValuesContainer');
+        $outValuesElem[hasMinDscrErr ? 'addClass' : 'removeClass']('panel-danger alert-danger');
+        $outValuesElem[hasMinDscrErr ? 'removeClass' : 'addClass']('panel-success alert-success');
+        var $outPanelBodyElem = $('#outputValuesContainer .panel-body');
+        $outPanelBodyElem[hasMinDscrErr ? 'addClass' : 'removeClass']('bg-danger');
+        $outPanelBodyElem[hasMinDscrErr ? 'removeClass' : 'addClass']('bg-success');
+        $('#outDescFail')[hasMinDscrErr ? 'show' : 'hide']();
+        $('#outDescPass')[hasMinDscrErr ? 'hide' : 'show']();
+        var $outDscrFormGroup = $('#outDscrFormGroup');
+        $outDscrFormGroup[hasMinDscrErr ? 'addClass' : 'removeClass']('has-error');
+    }//END: `_checkForMinDscrErr`
+
     function _setSignupCompleted(isSignupCompleted) {
         console.log('Storing "isSignupCompleted" value: ' + isSignupCompleted);
         window.localStorage.setItem('isSignupCompleted', ''+isSignupCompleted);
@@ -159,7 +189,11 @@
     }//END: `_attemptSignInWithGoogle()`
 
     function _toPercent(num) {
-        return num/100;
+        return num / 100;
+    }
+
+    function _fromPercent(dec) {
+        return dec * 100;
     }
 
     //
@@ -279,6 +313,11 @@
                 },
                 // Called when form `submit` button fired
                 submitHandler: function (form) {
+                    // 1b) Check whether we pass DSCR or not (if not, get the
+                    // error display ready, otherwise get success results ready).
+                    _checkForMinDscrErr();
+
+                    // 2) TODO: Congratulate user and offer to send email of results
                     var email,
                         firstName,
                         lastName;
@@ -378,7 +417,11 @@
                         format: '0.000%',
                     },
                 },//END: `data`
-                // onAfterCalculate: function () { /* ... */ }
+                onAfterCalculate: function () {
+                    // 1a) Check whether we pass DSCR or not (if not, get the
+                    // error display ready, otherwise get success results ready).
+                    _checkForMinDscrErr();
+                },
             });//END: `$(...).calx()`
 
             // Configure debug display toggle button

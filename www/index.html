@@ -429,6 +429,24 @@
                                 style="display:none;"
                             >
                                 <div class="panel-body bg-success">
+                                    <div id="outDescFail"
+                                        class="passFailDesc">
+                                        <h3>
+                                            Sorry, you didn't pass DSCR.
+                                        </h3>
+                                        <p>
+                                            Let's see if we can make some adjustments to get you to pass.
+                                        </p>
+                                    </div><!-- /#outDescFail -->
+                                    <div id="outDescPass"
+                                        class="passFailDesc">
+                                        <h3>
+                                            You passed!
+                                        </h3>
+                                        <p>
+                                            Check out your results below and send them via email!
+                                        </p>
+                                    </div><!-- /#outDescPass -->
                                     <div class="form-group form-group-lg">
                                         <label
                                             for="outLtvRatio"
@@ -519,7 +537,10 @@
                                             <!-- </div>  -->
                                         </div>
                                     </div>
-                                    <div class="form-group form-group-lg">
+                                    <div
+                                        id="outDscrFormGroup"
+                                        class="form-group form-group-lg"
+                                    >
                                         <label
                                             for="outDscrValue"
                                             class="control-label col-sm-6"
@@ -535,6 +556,11 @@
                                                 data-formula="IF(K17='NA','Error',+E13/E18)"
                                                 data-format="0.00"
                                             >
+                                            <span
+                                                id="outDscrValueErrBlock"
+                                                class="help-block"
+                                                style="display:none;"
+                                            ></span>
                                         </div>
                                     </div>
                                 </div><!--/.panel-body -->

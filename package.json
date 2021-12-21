@@ -18,7 +18,7 @@
     "build:ios:release": "cordova build ios --release --buildConfig=./build.json",
     "build:android:release": "cordova build android --release --buildConfig=./build.json",
     "icons": "npx cordova-res",
-    "version": "cordova-update-config --appversion $npm_package_version && git add -A ./config.xml",
+    "version": "cordova-update-config --appversion $npm_package_version && git add -A ./config.xml && git push && git push --tags",
     "ls": "cordova run --list --emulator",
     "ls:ios": "cordova run ios --list --emulator",
     "ls:android": "cordova run android --list --emulator",

@@ -330,7 +330,7 @@
                         //_alertNeedsSignup(_attemptSignInWithApple);//XXX Too many dialogs
                         _attemptSignInWithApple();
                     }
-                    else if (device.platform.toLowerCase() === 'android') {
+                    else if (device.platform.toLowerCase() === 'android' || device.platform.toLowerCase() === 'browser') {
                         //_alertNeedsSignup(_attemptSignInWithGoogle);//XXX Too many dialogs
                         _attemptSignInWithGoogle();
                     }

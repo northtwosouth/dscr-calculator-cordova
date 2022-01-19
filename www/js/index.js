@@ -1,5 +1,7 @@
 (function ($, window, undefined) {
 
+    var _HS_PORTAL_ID = '20494112';
+
     function _checkForMinDscrErr() {
         var isCashOut = $('#purposeOfLoan').val() === 'Cashout';
         var minFico = isCashOut ? 680 : 700;
@@ -30,9 +32,20 @@
         $outDscrFormGroup[hasMinDscrErr ? 'addClass' : 'removeClass']('has-error');
     }//END: `_checkForMinDscrErr`
 
-    function _setSignupCompleted(isSignupCompleted) {
+    function _setSignupCompleted(isSignupCompleted, /*optional*/signupPayload) {
         console.log('Storing "isSignupCompleted" value: ' + isSignupCompleted);
         window.localStorage.setItem('isSignupCompleted', ''+isSignupCompleted);
+        if (isSignupCompleted) {
+            console.log('Storing `signupPayload`: ' + JSON.stringify(signupPayload));
+            window.localStorage.setItem('dscr_firstname', ''+signupPayload.firstname);
+            window.localStorage.setItem('dscr_lastname', ''+signupPayload.lastname);
+            window.localStorage.setItem('dscr_email', ''+signupPayload.email);
+        }
+        else {
+            window.localStorage.removeItem('dscr_firstname');
+            window.localStorage.removeItem('dscr_lastname');
+            window.localStorage.removeItem('dscr_email');
+        }
     }
 
     function _isSignupCompleted() {
@@ -86,31 +99,42 @@
     }
 
     function _toggleDisplayOutputValues(/*optional*/show) {
-        return __toggleDisplayValuesElem('#outputValuesContainer', show);
+        __toggleDisplayValuesElem('#outputValuesContainer', show);
+        __toggleDisplayValuesElem('#emailMyResultsSection', show);
+        __toggleDisplayValuesElem('#emailMyResultsBtnContainer', show);
+        if (show) {
+            // Prepopulate "Email My Results" step with results (as hidden fields)
+            $('#emr_hiddenLtv'         ).val( $('#outLtvRatio').val()             );
+            $('#emr_hiddenIntRate'     ).val( $('#outEstIntRate').val()           );
+            $('#emr_hiddenPrincIntRate').val( $('#outPrincipalAndInterest').val() );
+            $('#emr_hiddenPiti'        ).val( $('#outSubjectPiti').val()          );
+            $('#emr_hiddenDscrRatio'   ).val( $('#outDscrValue').val()            );
+        }
+        return show;
     }
 
     function _toggleDisplayDebugValues(/*optional*/show) {
         return __toggleDisplayValuesElem('#debugValuesContainer', show);
     }
 
-    function _sendToHubspot(email, firstname, lastname) {
-        var portalId = '20494112';
+    function _sendLoginToHubspot(email, firstname, lastname) {
         var formGuid = '34c828b3-74fc-47bb-b42a-5978f82e7d80';
+        var payload = {
+            email: email,
+            firstname: firstname,
+            lastname: lastname,
+        };
 
         console.log('Sending registration data to Hubspot...');
 
         $.ajax({
-            url: 'https://forms.hubspot.com/uploads/form/v2/' + portalId + '/' + formGuid,
+            url: 'https://forms.hubspot.com/uploads/form/v2/' + _HS_PORTAL_ID + '/' + formGuid,
             method: 'POST',
-            data: {
-                email: email,
-                firstname: firstname,
-                lastname: lastname,
-            },
+            data: payload,
         }).done(function (response, textStatus, jqXHR) {
             console.log('Registration data successfully sent to Hubspot.');
             //_scheduleLocalNotification();
-            _setSignupCompleted(true);
+            _setSignupCompleted(true, payload);
             _toggleDisplayOutputValues(true);
         }).fail(function (jqXHR, textStatus, errorThrown) {
             console.error('Failed to send registration data to Hubspot: ' + errorThrown);
@@ -118,9 +142,33 @@
             _setSignupCompleted(false);
             _toggleDisplayOutputValues(false);
         }).always(function () {
+            // Prepopulate "Email My Results" step with login info
+            $('#emr_firstName').val(firstname);
+            $('#emr_lastName').val(lastname);
+            $('#emr_email').val(email);
+        });
+    }//END: `_sendLoginToHubspot()`
+
+    function _sendEmailMyResultsToHubspot() {
+        var formGuid = '45330346-4b32-4024-bf21-d5cc52365edd';
+        var payload = $('form#emailMyResultsForm').serializeObject();
+
+        console.log('Sending "Email My Results" request data to Hubspot: ' + JSON.stringify(payload));
+
+        $.ajax({
+            url: 'https://forms.hubspot.com/uploads/form/v2/' + _HS_PORTAL_ID + '/' + formGuid,
+            method: 'POST',
+            data: payload,
+        }).done(function (response, textStatus, jqXHR) {
+            console.log('"Email My Results" data successfully sent to Hubspot.');
+            __toggleDisplayValuesElem('#emailMyResultsSection', false);
+        }).fail(function (jqXHR, textStatus, errorThrown) {
+            console.error('Failed to send "Email My Results" data to Hubspot: ' + errorThrown);
+            //XXX TODO: No other recourse here?
+        }).always(function () {
             //...
         });
-    }//END: `_sendToHubspot()`
+    }//END: `_sendLoginToHubspot()`
 
     function _attemptSignInWithApple() {
         window.cordova.plugins.SignInWithApple.signin(
@@ -134,7 +182,7 @@
                 var decodedObj = jwt_decode(succ.identityToken);//Only needed when email-masking is used
                 console.log('Apple login succeeded!');
                 console.debug('Raw response: ' + JSON.stringify(succ) + '\nDecoded JWT: ' + JSON.stringify(decodedObj));
-                _sendToHubspot(
+                _sendLoginToHubspot(
                     succ.email || decodedObj.email,
                     succ.fullName.givenName,
                     succ.fullName.familyName
@@ -175,7 +223,7 @@
             },
             function (obj) {
                 console.log('Google login succeeded: ' + JSON.stringify(obj));
-                _sendToHubspot(
+                _sendLoginToHubspot(
                     obj.email,
                     obj.givenName,
                     obj.familyName
@@ -317,7 +365,7 @@
                     // error display ready, otherwise get success results ready).
                     _checkForMinDscrErr();
 
-                    // 2) TODO: Congratulate user and offer to send email of results
+                    // Show results if signup completed, otherwise prompt again
                     var email,
                         firstName,
                         lastName;
@@ -344,7 +392,7 @@
                             _alertSignupFailed();
                         }
                         else {
-                            _sendToHubspot(email, firstName, lastName);
+                            _sendLoginToHubspot(email, firstName, lastName);
                         }
                     }
                     else {
@@ -428,6 +476,10 @@
             $('#debugValuesDisplayToggle').on('click', function () {
                 _toggleDisplayDebugValues();
             });
-        });
+            
+            $('#emailMyResultsBtn').on('click', function () {
+                __toggleDisplayValuesElem('#emailMyResultsFormContainer');
+            });
+        });//END: jQuery `domready`
     }, false);//END: `deviceready`
 })(jQuery, window);

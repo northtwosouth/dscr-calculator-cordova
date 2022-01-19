@@ -20,6 +20,7 @@
         <title>DSCR Calculator</title>
 
         <link rel="stylesheet" type="text/css" href="lib/bootstrap/3.4.1/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="lib/font-awesome@4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="css/index.css">
     </head>
     <body>
@@ -414,13 +415,16 @@
                                     ><em>(I understand rate will be .25% higher)</em></p>
                                 </div>
                             </div>
-                            <div class="form-group row small">
+                            <div class="form-group row">
                                 <div class="col-xs-12 text-center">
                                     <button
                                         name="submit"
                                         type="submit"
-                                        class="btn btn-block btn-lg btn-success"
-                                    >Calculate</button>
+                                        class="btn btn-block btn-success"
+                                    ><i
+                                        class="fa fa-calculator mr-5"
+                                        aria-hidden="true"
+                                    ></i>Calculate!</button>
                                 </div>
                             </div>
 
@@ -446,7 +450,7 @@
                                             You passed!
                                         </h3>
                                         <p>
-                                            Check out your results below and send them via email!
+                                            Check out your results below and send yourself a copy by email.
                                         </p>
                                     </div><!-- /#outDescPass -->
                                     <div class="form-group form-group-lg">
@@ -475,7 +479,8 @@
                                         <label
                                             for="outEstIntRate"
                                             class="control-label col-sm-6"
-                                        >Estimated Interest Rate</label>
+                                        >Estimated Interest Rate&nbsp;<span 
+                                            class="label-hint text-muted">(Industry average)</span></label>
                                         <div class="col-sm-6">
                                             <!-- <div class="input-group"> -->
                                             <input
@@ -749,7 +754,124 @@
                                 </div><!--/.panel-body -->
                             </div><!-- /#debugValuesContainer.panel -->
                             <!-- XXX END: DEBUG VALUES -->
-                        </form>
+                        </form><!-- #calxForm -->
+
+                        <div
+                            id="emailMyResultsSection"
+                            style="display:none;"
+                        >
+                            <div
+                                id="emailMyResultsBtnContainer"
+                                style="display:none;"
+                                class="form-group row"
+                            >
+                                <div class="col-xs-12 text-center">
+                                    <button
+                                        id="emailMyResultsBtn"
+                                        class="btn btn-block btn-info"
+                                        type="button"
+                                    ><i
+                                        class="fa fa-envelope mr-5"
+                                        aria-hidden="true"
+                                    ></i>Email my results!</button>
+                                </div>
+                            </div><!-- /#emailMyResultsBtnContainer -->
+
+                            <div
+                                id="emailMyResultsFormContainer"
+                                class="panel panel-info alert-info"
+                                style="display:none;"
+                            >
+                                <div class="panel-body bg-info">
+                                    <form
+                                        id="emailMyResultsForm"
+                                        class="form-horizontal"
+                                        action=""
+                                    >
+                                        <div class="row">
+                                            <div class="col-xs-6">
+                                                <label
+                                                    for="emr_firstName"
+                                                    class="control-label"
+                                                >First Name</label>
+                                                <input
+                                                    id="emr_firstName"
+                                                    name="firstname"
+                                                    type="text"
+                                                    required="required"
+                                                    class="form-control"
+                                                >
+                                            </div>
+                                            <div class="col-xs-6">
+                                                <label
+                                                    for="emr_lastName"
+                                                    class="control-label"
+                                                >Last Name</label>
+                                                <input
+                                                    id="emr_lastName"
+                                                    name="lastname"
+                                                    type="text"
+                                                    required="required"
+                                                    class="form-control"
+                                                >
+                                            </div>
+                                            <div class="col-xs-12">
+                                                <label
+                                                    for="emr_email"
+                                                    class="control-label"
+                                                >Email</label>
+                                                <input
+                                                    id="emr_email"
+                                                    name="email"
+                                                    type="email"
+                                                    required="required"
+                                                    class="form-control"
+                                                >
+                                            </div>
+                                            <div class="col-xs-12">
+                                                <label
+                                                    for="emr_resultsNickname"
+                                                    class="control-label"
+                                                >Results Label/Nickname&nbsp;<span 
+                                                class="label-hint text-muted">(Example: the property address or something else to help you remember)</span></label>
+                                                <input
+                                                    id="emr_resultsNickname"
+                                                    name="dscr_results_name___dscr_calculator"
+                                                    type="text"
+                                                    required="required"
+                                                    class="form-control"
+                                                >
+                                            </div>
+                                            <input
+                                                id="emr_hiddenLtv"
+                                                name="ltv___dscr_calculator"
+                                                type="hidden"
+                                            >
+                                            <input
+                                                id="emr_hiddenIntRate"
+                                                name="estimated_interest_rate___dscr_calculator"
+                                                type="hidden"
+                                            >
+                                            <input
+                                                id="emr_hiddenPrincIntRate"
+                                                name="principal___interest_payment___dscr_calculator"
+                                                type="hidden"
+                                            >
+                                            <input
+                                                id="emr_hiddenPiti"
+                                                name="piti___dscr_calculator"
+                                                type="hidden"
+                                            >
+                                            <input
+                                                id="emr_hiddenDscrRatio"
+                                                name="dscr_ratio___dscr_calculator"
+                                                type="hidden"
+                                            >
+                                        </div>
+                                    </form><!-- #emailMyResultsForm -->
+                                </div><!--/.panel-body -->
+                            </div><!-- /#emailMyResultsFormContainer.panel -->
+                        </div><!-- /#emailMyResultsSection -->
                     </div><!-- /.col-* -->
                 </div><!-- /.row -->
 
@@ -766,7 +888,7 @@
                                 </div>
                             </div><!-- /.col-* -->
                             <div class="col-xs-12 text-center">
-                                <p class="text-uppercase small">
+                                <p class="text-uppercase small mb-0">
                                     Call <a href="tel:+18888787715">888-878-7715</a> for assistance
                                 </p>
                             </div><!-- /.col-* -->
@@ -776,7 +898,7 @@
                 <div id="adOpportunities"
                      class="row">
                     <div class="col-xs-12 text-center">
-                        <p>
+                        <p class="mb-0">
                             For advertising opportunities, contact:<br>
                             North 2 South, LLC <a href="mailto:apps@northtwosouth.com">apps@northtwosouth.com</a>
                         </p>
@@ -806,6 +928,7 @@
         <script src="lib/jquery/3.6.0/jquery.min.js"></script>
         <script src="lib/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
         <script src="lib/jquery-validation@1.19.3/dist/additional-methods.min.js"></script>
+        <script src="lib/jquery-serialize-object@2.5.0/jquery.serialize-object.min.js"></script>
         <script src="lib/numeral@1.4.5/numeral.min.js"></script>
         <script src="lib/xsanisty/calx.js/jquery-calx-2.2.7+tfg.1.js"></script>
         <script src="lib/jwt-decode@3.1.2/jwt-decode.js"></script>

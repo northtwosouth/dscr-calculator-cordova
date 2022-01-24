@@ -771,7 +771,7 @@
                                         class="btn btn-block btn-lg btn-info"
                                         type="button"
                                     ><i
-                                        class="fa fa-envelope mr-5"
+                                        class="fa fa-share mr-5"
                                         aria-hidden="true"
                                     ></i>Email my results!</button>
                                 </div>
@@ -788,7 +788,7 @@
                                         class="form-horizontal"
                                         action=""
                                     >
-                                        <div class="row">
+                                        <div class="form-group">
                                             <div class="col-xs-6">
                                                 <label
                                                     for="emr_firstName"
@@ -815,6 +815,8 @@
                                                     class="form-control"
                                                 >
                                             </div>
+                                        </div>
+                                        <div class="form-group">
                                             <div class="col-xs-12">
                                                 <label
                                                     for="emr_email"
@@ -828,6 +830,8 @@
                                                     class="form-control"
                                                 >
                                             </div>
+                                        </div>
+                                        <div class="form-group">
                                             <div class="col-xs-12">
                                                 <label
                                                     for="emr_resultsNickname"
@@ -842,31 +846,43 @@
                                                     class="form-control"
                                                 >
                                             </div>
-                                            <input
-                                                id="emr_hiddenLtv"
-                                                name="ltv___dscr_calculator"
-                                                type="hidden"
-                                            >
-                                            <input
-                                                id="emr_hiddenIntRate"
-                                                name="estimated_interest_rate___dscr_calculator"
-                                                type="hidden"
-                                            >
-                                            <input
-                                                id="emr_hiddenPrincIntRate"
-                                                name="principal___interest_payment___dscr_calculator"
-                                                type="hidden"
-                                            >
-                                            <input
-                                                id="emr_hiddenPiti"
-                                                name="piti___dscr_calculator"
-                                                type="hidden"
-                                            >
-                                            <input
-                                                id="emr_hiddenDscrRatio"
-                                                name="dscr_ratio___dscr_calculator"
-                                                type="hidden"
-                                            >
+                                        </div>
+                                        <input
+                                            id="emr_hiddenLtv"
+                                            name="ltv___dscr_calculator"
+                                            type="hidden"
+                                        >
+                                        <input
+                                            id="emr_hiddenIntRate"
+                                            name="estimated_interest_rate___dscr_calculator"
+                                            type="hidden"
+                                        >
+                                        <input
+                                            id="emr_hiddenPrincIntRate"
+                                            name="principal___interest_payment___dscr_calculator"
+                                            type="hidden"
+                                        >
+                                        <input
+                                            id="emr_hiddenPiti"
+                                            name="piti___dscr_calculator"
+                                            type="hidden"
+                                        >
+                                        <input
+                                            id="emr_hiddenDscrRatio"
+                                            name="dscr_ratio___dscr_calculator"
+                                            type="hidden"
+                                        >
+                                        <div class="form-group row">
+                                            <div class="col-xs-12 text-center">
+                                                <button
+                                                    name="submit"
+                                                    type="submit"
+                                                    class="btn btn-block btn-lg btn-success"
+                                                ><i
+                                                    class="fa fa-envelope mr-5"
+                                                    aria-hidden="true"
+                                                ></i>Email me a copy!</button>
+                                            </div>
                                         </div>
                                     </form><!-- #emailMyResultsForm -->
                                 </div><!--/.panel-body -->

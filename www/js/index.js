@@ -168,7 +168,7 @@
         }).always(function () {
             //...
         });
-    }//END: `_sendLoginToHubspot()`
+    }//END: `_sendEmailMyResultsToHubspot()`
 
     function _attemptSignInWithApple() {
         window.cordova.plugins.SignInWithApple.signin(
@@ -313,7 +313,11 @@
                 }
             });
 
+            //
             // Initialize form validation plugin
+            //
+
+            // First, the calculator form
             $('form#calxForm').validate({
                 // Define validation rules
                 rules: {
@@ -402,6 +406,35 @@
                 },//END: `submitHandler`
             });//END: `$(...).validate()`
 
+            // Second, the "email my results" form
+            $('form#emailMyResultsForm').validate({
+                // Define validation rules
+                rules: {
+                    firstname: {
+                        required: true,
+                    },
+                    lastname: {
+                        required: true,
+                    },
+                    email: {
+                        required: true,
+                        email: true,
+                    },
+                    dscr_results_name___dscr_calculator: {
+                        required: true,
+                    },
+                },
+                // Override validation error messages
+                messages: {
+                    //...
+                },
+                // Called when form `submit` button fired
+                submitHandler: function (form) {
+                    _sendEmailMyResultsToHubspot();
+                    return false;//Prevent us from redirecting
+                },//END: `submitHandler`
+            });//END: `$(...).validate()`
+
             $('form#calxForm').calx({
                 data: {
                     /* beautify ignore:start */
@@ -478,7 +511,8 @@
             });
             
             $('#emailMyResultsBtn').on('click', function () {
-                __toggleDisplayValuesElem('#emailMyResultsFormContainer');
+                var show = __toggleDisplayValuesElem('#emailMyResultsFormContainer');
+                __toggleDisplayValuesElem('#emailMyResultsBtnContainer', !show);
             });
         });//END: jQuery `domready`
     }, false);//END: `deviceready`

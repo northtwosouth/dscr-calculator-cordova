@@ -51,7 +51,6 @@
     "cordova-plugin-sign-in-with-apple": "^0.1.2",
     "cordova-res": "^0.15.3",
     "cordova-update-config": "^1.0.3",
-    "ios-deploy": "^1.11.4",
     "xml-js": "^1.6.11"
   },
   "cordova": {
@@ -76,8 +75,5 @@
     "cordova-plugin-androidx-adapter": "1.1.3",
     "cordova-plugin-dialogs": "2.0.2",
     "cordova-plugin-googleplus": "git+https://github.com/runderworld/cordova-plugin-googleplus.git"
-  },
-  "optionalDependencies": {
-    "ios-deploy": "*"
   }
 }

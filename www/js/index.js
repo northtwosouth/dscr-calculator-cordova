@@ -30,6 +30,10 @@
         $('#outDescPass')[hasMinDscrErr ? 'hide' : 'show']();
         var $outDscrFormGroup = $('#outDscrFormGroup');
         $outDscrFormGroup[hasMinDscrErr ? 'addClass' : 'removeClass']('has-error');
+        // Note here that we're merely prepping the inner button visiblity (the outer section
+        // container will be handled in the form `submitHandler`).
+        $('#emailMyResultsBtnContainer')[hasMinDscrErr ? 'hide' : 'show']();
+        $('#emailMyResultsFormContainer').hide();//Upon each DSCR validation, reset result form to hidden
     }//END: `_checkForMinDscrErr`
 
     function _setSignupCompleted(isSignupCompleted, /*optional*/signupPayload) {
@@ -100,8 +104,7 @@
 
     function _toggleDisplayOutputValues(/*optional*/show) {
         __toggleDisplayValuesElem('#outputValuesContainer', show);
-        __toggleDisplayValuesElem('#emailMyResultsSection', show);
-        __toggleDisplayValuesElem('#emailMyResultsBtnContainer', show);
+        $('#emailMyResultsSection')[show ? 'show' : 'hide']();
         if (show) {
             // Prepopulate "Email My Results" step with results (as hidden fields)
             $('#emr_hiddenLtv'         ).val( $('#outLtvRatio').val()             );
@@ -317,7 +320,7 @@
             // Initialize form validation plugin
             //
 
-            // First, the calculator form
+            // First, init the calculator form
             $('form#calxForm').validate({
                 // Define validation rules
                 rules: {
@@ -406,7 +409,7 @@
                 },//END: `submitHandler`
             });//END: `$(...).validate()`
 
-            // Second, the "email my results" form
+            // Second, init the "email my results" form
             $('form#emailMyResultsForm').validate({
                 // Define validation rules
                 rules: {
@@ -512,7 +515,7 @@
             
             $('#emailMyResultsBtn').on('click', function () {
                 var show = __toggleDisplayValuesElem('#emailMyResultsFormContainer');
-                __toggleDisplayValuesElem('#emailMyResultsBtnContainer', !show);
+                $('#emailMyResultsBtnContainer')[show ? 'hide' : 'show']();
             });
         });//END: jQuery `domready`
     }, false);//END: `deviceready`

@@ -310,7 +310,7 @@
             }); //END: `$.validator.setDefaults(...)`
 
             // Prevent form submissions on <Enter> key
-            $('form#calxForm').bind('keypress', function (event) {
+            $('form#calxForm, form#emailMyResultsForm').bind('keypress', function (event) {
                 if (event.keyCode === 13) {
                     return false;
                 }

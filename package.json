@@ -54,6 +54,9 @@
     "cordova-update-config": "^1.0.3",
     "xml-js": "^1.6.11"
   },
+  "optionalDependencies": {
+    "ios-deploy": "^1.11.4"
+  },
   "cordova": {
     "plugins": {
       "cordova-plugin-local-notification": {},

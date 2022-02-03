@@ -18,7 +18,7 @@
     "build:ios:release": "cordova build ios --release --buildConfig=./build.json",
     "build:android:release": "cordova build android --release --buildConfig=./build.json",
     "build:browser": "cordova platform remove browser && cordova platform add browser && npm run icons && cordova build browser --release",
-    "icons": "npx cordova-res && npx png-to-ico resources/icon.png > www/favicon.ico",
+    "icons": "npx cordova-res && npx png-to-ico resources/icon.png > www/img/favicon.ico",
     "version": "cordova-update-config --appversion $npm_package_version && git add -A ./config.xml && git push && git push --tags",
     "ls": "cordova run --list --emulator",
     "ls:ios": "cordova run ios --list --emulator",
@@ -71,9 +71,9 @@
       }
     },
     "platforms": [
-      "browser",
       "android",
-      "ios"
+      "ios",
+      "browser"
     ]
   },
   "dependencies": {

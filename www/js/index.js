@@ -17,9 +17,9 @@
             (parseInt($('#ficoScore').val()) < minFico) || (parseFloat($('#outLtvRatio').val()) > maxLtv)
         );
         console.log('_checkForMinDscrErr()', 'hasMinDscrErr ==> ' + hasMinDscrErr);
-        var $errBlockElem = $('#outDscrValueErrBlock');
-        $errBlockElem.text('The minimum acceptable DSCR is 1.00 if either FICO Score is less than ' + minFico + ' or LTV is greater than ' + maxLtv + '%');
-        $errBlockElem[hasMinDscrErr ? 'show' : 'hide']();
+        var $dscrErrBlockElem = $('#outDscrValue_ErrBlock');
+        $dscrErrBlockElem.text('The minimum acceptable DSCR is 1.00 if either FICO Score is less than ' + minFico + ' or LTV is greater than ' + maxLtv + '%');
+        $dscrErrBlockElem[hasMinDscrErr ? 'show' : 'hide']();
         var $outValuesElem = $('#outputValuesContainer');
         $outValuesElem[hasMinDscrErr ? 'addClass' : 'removeClass']('panel-danger alert-danger');
         $outValuesElem[hasMinDscrErr ? 'removeClass' : 'addClass']('panel-success alert-success');
@@ -361,6 +361,7 @@
                     // outEstIntRate: _OPTS_PERCENT,
                     // outPrincipalAndInterest: _OPTS_DOLLAR_AMT,
                     // outSubjectPiti: _OPTS_DOLLAR_AMT,
+                    // outDscrValue: {},
                 },
                 // Override validation error messages
                 messages: {
@@ -368,6 +369,7 @@
                 },
                 // Called when form `submit` button fired
                 submitHandler: function (form) {
+                    console.log('BEGIN: #calxForm::submitHandler()');
                     // 1b) Check whether we pass DSCR or not (if not, get the
                     // error display ready, otherwise get success results ready).
                     _checkForMinDscrErr();
@@ -406,6 +408,7 @@
                         navigator.notification.alert('Unexpected `device.platform`: ' + device.platform);
                         //TODO: should we be lenient (and silent) here???
                     }
+                    console.log('END: #calxForm::submitHandler()');
                 },//END: `submitHandler`
             });//END: `$(...).validate()`
 
@@ -502,9 +505,11 @@
                     },
                 },//END: `data`
                 onAfterCalculate: function () {
+                    console.log('BEGIN: onAfterCalculate()');
                     // 1a) Check whether we pass DSCR or not (if not, get the
                     // error display ready, otherwise get success results ready).
                     _checkForMinDscrErr();
+                    console.log('END: onAfterCalculate()');
                 },
             });//END: `$(...).calx()`
 

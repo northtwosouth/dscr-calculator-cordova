@@ -222,7 +222,7 @@
     function _attemptSignInWithAppleJs() {
         return AppleID.auth.signIn().then(function (response) {
             console.log('Apple JS login succeeded: ' + JSON.stringify(response));
-            var decodedObj = jwt_decode(response.id_token);
+            var decodedObj = jwt_decode(response.authorization.id_token);
             console.log('Raw response: ' + JSON.stringify(response) + '\nDecoded JWT: ' + JSON.stringify(decodedObj));
             _sendLoginToHubspot(
                 decodedObj.email,

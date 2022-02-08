@@ -225,9 +225,11 @@
             var decodedObj = jwt_decode(response.authorization.id_token);
             console.log('Raw response: ' + JSON.stringify(response) + '\nDecoded JWT: ' + JSON.stringify(decodedObj));
             _sendLoginToHubspot(
-                decodedObj.email,
-                decodedObj.fullName.givenName,
-                decodedObj.fullName.familyName
+                // NOTE: `user` object only presented the first time the user authorizes the application.
+                // Otherwise we fall back on JWT, which contains only the email.
+                !!response.user ? response.user.email : decodedObj.email,
+                !!response.user && !!response.user.name ? response.user.name.firstName : '',
+                !!response.user && !!response.user.name ? response.user.name.lastName : '',
             );
         }, function (result) {
             console.error('Apple JS login failed: ' + JSON.stringify(result));

@@ -17,6 +17,12 @@
         <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover, user-scalable=no">
         <meta name="color-scheme" content="light dark">
 
+        <meta name="appleid-signin-client-id" content="mortgage.dscrcalculator">
+        <meta name="appleid-signin-scope" content="name email">
+        <meta name="appleid-signin-redirect-uri" content="https://www.dscrcalculator.mortgage/">
+        <meta name="appleid-signin-state" content="ermahgerd berks">
+        <meta name="appleid-signin-use-popup" content="true">
+
         <title>DSCR Calculator</title>
 
         <link rel="stylesheet" type="text/css" href="lib/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -960,6 +966,55 @@
             </div><!-- /.container -->
         </div><!-- #app -->
 
+        <div
+            class="modal fade"
+            id="chooseAuthModal"
+            tabindex="-1"
+            role="dialog"
+            aria-labelledby="chooseAuthModalLabel"
+        >
+            <div class="modal-dialog modal-sm" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="chooseAuthModalLabel">How would you like to authenticate?</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-xs-4 text-center">
+                                <a
+                                    class="text-danger"
+                                    href="#"
+                                    onclick="attemptSignInWithGoogle(); return false;"
+                                    title="Log in with your Google account"
+                                ><i class="fa fa-google fa-5x"></i><span
+                                    class="sr-only">Google</span></a>
+                            </div>
+                            <div class="col-xs-4 text-center">
+                                <a
+                                    class="text-muted"
+                                    href="#"
+                                    onclick="attemptSignInWithAppleJs(); return false;"
+                                    title="Log in with your Apple ID"
+                                ><i class="fa fa-apple fa-5x"></i><span
+                                    class="sr-only">Apple</span></a>
+                            </div>
+                            <div class="col-xs-4 text-center">
+                                <a
+                                    class="text-info"
+                                    href="#"
+                                    onclick="attemptSignInWithFb(); return false;"
+                                    title="Log in with your Facebook account"
+                                ><i class="fa fa-facebook fa-5x"></i><span
+                                    class="sr-only">Facebook</span></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- /#chooseAuthModal -->
+
         <!-- 1. platform -->
         <script src="cordova.js"></script>
 
@@ -972,7 +1027,9 @@
         <script src="lib/xsanisty/calx.js/jquery-calx-2.2.7+tfg.1.js"></script>
         <script src="lib/jwt-decode@3.1.2/jwt-decode.js"></script>
         <script src="lib/smoothscroll-polyfill@0.4.4/smoothscroll.min.js"></script>
-        <!-- <script src="lib/bootstrap/3.4.1/js/bootstrap.min.js"></script> -->
+        <script src="lib/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="https://appleid.cdn-apple.com/appleauth/static/jsapi/appleid/1/en_US/appleid.auth.js"></script>
+        <!-- <div id="appleid-signin" data-color="black" data-border="true" data-type="sign in"></div> -->
 
         <!-- 3. app -->
         <script src="js/index.js"></script>

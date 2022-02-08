@@ -140,6 +140,7 @@
             _setSignupCompleted(true, payload);
             _toggleDisplayOutputValues(true);
             gtag('event', 'conversion', { 'send_to': 'AW-932138238/W9CXCJCR9pcDEP6ZvbwD', 'event_callback': callback });
+            _closeAuthModal();
         }).fail(function (jqXHR, textStatus, errorThrown) {
             console.error('Failed to send registration data to Hubspot: ' + errorThrown);
             //XXX TODO: No other recourse here?
@@ -174,7 +175,7 @@
         });
     }//END: `_sendEmailMyResultsToHubspot()`
 
-    function _attemptSignInWithApple() {
+    function _attemptSignInWithIos() {
         window.cordova.plugins.SignInWithApple.signin(
             {
                 requestedScopes: [
@@ -184,7 +185,7 @@
             },
             function (succ) {
                 var decodedObj = jwt_decode(succ.identityToken);//Only needed when email-masking is used
-                console.log('Apple login succeeded!');
+                console.log('iOS login succeeded!');
                 console.debug('Raw response: ' + JSON.stringify(succ) + '\nDecoded JWT: ' + JSON.stringify(decodedObj));
                 _sendLoginToHubspot(
                     succ.email || decodedObj.email,
@@ -193,7 +194,7 @@
                 );
             },
             function (err) {
-                console.error('Apple login failed: ' + JSON.stringify(err));
+                console.error('iOS login failed: ' + JSON.stringify(err));
                 switch (err.code) {
                     case '1001': // ASAuthorizationErrorCanceled (user cancelled)
                     case '1003': // ASAuthorizationErrorNotHandled (user cancelled)
@@ -216,10 +217,32 @@
                 }
             }
         );//END: `plugins.SignInWithApple.signin`
-    }//END: `_attemptSignInWithApple()`
+    }//END: `_attemptSignInWithIos()`
+
+    function _attemptSignInWithAppleJs() {
+        return AppleID.auth.signIn().then(function (response) {
+            console.log('Apple JS login succeeded: ' + JSON.stringify(response));
+            var decodedObj = jwt_decode(response.identityToken);//Only needed when email-masking is used
+            console.log('Apple login succeeded!');
+            console.debug('Raw response: ' + JSON.stringify(response) + '\nDecoded JWT: ' + JSON.stringify(decodedObj));
+            _sendLoginToHubspot(
+                response.email || decodedObj.email,
+                response.fullName.givenName,
+                response.fullName.familyName
+            );
+        }, function (result) {
+            console.error('Apple JS login failed: ' + JSON.stringify(result));
+
+            _alertSignupFailed();
+
+            if (result.error === 'popup_closed_by_user') {
+                // Leave popup open to try again
+            }
+        });
+    }//END: `_attemptSignInWithAppleJs()`
 
     function _attemptSignInWithGoogle() {
-        window.plugins.googleplus.login(//NOTE: Yes, this plugin uses the old `window.plugins` Cordova global
+        return window.plugins.googleplus.login(//NOTE: Yes, this plugin uses the old `window.plugins` Cordova global
             {
                 'scopes': 'profile email', // optional, space-separated list of scopes, If not included or empty, defaults to `profile` and `email`.
                 'webClientId': '711934747211-9jiqn8i1klq69sodg7ds2td7nt5t6mgu.apps.googleusercontent.com', // optional clientId of your Web application from Credentials settings of your project - On Android, this MUST be included to get an idToken. On iOS, it is not required.
@@ -240,6 +263,10 @@
         );//END: `plugins.googleplus.login`
     }//END: `_attemptSignInWithGoogle()`
 
+    function _attemptSignInWithFb() {
+        alert('FB login todo');
+    }//END: `_attemptSignInWithFb()`
+
     function _toPercent(num) {
         return num / 100;
     }
@@ -247,6 +274,16 @@
     function _fromPercent(dec) {
         return dec * 100;
     }
+
+    function _closeAuthModal() {
+        $('#chooseAuthModal').modal('hide');
+    }
+
+
+    // Expose to template
+    window.attemptSignInWithGoogle = _attemptSignInWithGoogle;
+    window.attemptSignInWithAppleJs = _attemptSignInWithAppleJs;
+    window.attemptSignInWithFb = _attemptSignInWithFb;
 
     //
     // Wait for the deviceready event before using any of Cordova's device APIs.
@@ -385,25 +422,15 @@
                     }
                     // Otherwise signup not yet completed, so sign in based on platform
                     else if (device.platform.toLowerCase() === 'ios') {
-                        //_alertNeedsSignup(_attemptSignInWithApple);//XXX Too many dialogs
-                        _attemptSignInWithApple();
+                        //_alertNeedsSignup(_attemptSignInWithIos);//XXX Too many dialogs
+                        _attemptSignInWithIos();
                     }
-                    else if (device.platform.toLowerCase() === 'android' || device.platform.toLowerCase() === 'browser') {
+                    else if (device.platform.toLowerCase() === 'android') {
                         //_alertNeedsSignup(_attemptSignInWithGoogle);//XXX Too many dialogs
                         _attemptSignInWithGoogle();
                     }
                     else if (device.platform.toLowerCase() === 'browser') {
-                        // Yes, we can use `window.prompt` here
-                        if (
-                            !(email = window.prompt('Please enter your email address')) ||
-                            !(firstName = window.prompt('Please enter your first name')) ||
-                            !(lastName = window.prompt('Please enter your last name'))
-                        ) {
-                            _alertSignupFailed();
-                        }
-                        else {
-                            _sendLoginToHubspot(email, firstName, lastName);
-                        }
+                        $('#chooseAuthModal').modal('show');
                     }
                     else {
                         navigator.notification.alert('Unexpected `device.platform`: ' + device.platform);
@@ -522,6 +549,11 @@
             $('#emailMyResultsBtn').on('click', function () {
                 var show = __toggleDisplayValuesElem('#emailMyResultsFormContainer');
                 $('#emailMyResultsBtnContainer')[show ? 'hide' : 'show']();
+            });
+
+            $('#chooseAuthModal').modal({
+                show: false,//Just init
+                keyboard: false,//No escape!
             });
         });//END: jQuery `domready`
     }, false);//END: `deviceready`

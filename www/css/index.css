@@ -20,6 +20,19 @@ body {
     /* TBD */
     /* TFG color palette: blue #006199 / green #45ba01 */
 }
+
+/* Landscape layout (with min-width) */
+@media screen and (min-aspect-ratio: 1/1) and (min-width:400px) {
+    #app {
+        /* TBD */
+    }
+}
+
+@media screen and (prefers-color-scheme: dark) {
+    /* TBD */
+}
+
+/* BEGIN: Misc. custom styles */
 .passFailDesc h3 {
     margin-top: 0;
 }
@@ -38,17 +51,11 @@ body {
 #disclaimer {
     font-style: italic;
 }
-
-/* Landscape layout (with min-width) */
-@media screen and (min-aspect-ratio: 1/1) and (min-width:400px) {
-    #app {
-        /* TBD */
-    }
+label .label-hint {
+    font-size: 72%;
+    font-weight: normal;
 }
-
-@media screen and (prefers-color-scheme: dark) {
-    /* TBD */
-}
+/* END: Misc. custom styles */
 
 /* BEGIN: Adapt from TWBS 4.x */
 .form-control.form-control-plaintext {
@@ -75,23 +82,33 @@ body {
 }
 /* END: Fix TWBS 3.x shortcomings */
 
-
-/* BEGIN: Extend TWBS */
+/* BEGIN: Extend/Tweak TWBS */
 .form-control.form-control-plaintext.output-value-xl {
     font-size: 175%;
 }
 .form-control.form-control-plaintext.output-value-xxl {
     font-size: 250%;/* XXX Any larger and Webkit breaks */
 }
-/* END: Extend TWBS */
+/* + BEGIN: Position modal vertical middle */
+.modal {
+    text-align: center;
+}
+.modal:before {
+    display: inline-block;
+    vertical-align: middle;
+    content: " ";
+    height: 100%;
+}
+.modal-dialog {
+    display: inline-block;
+    text-align: left;
+    vertical-align: middle;
+}
+/* + END: Position modal vertical middle */
+/* END: Extend/Tweak TWBS */
 
 /* BEGIN: Utility classes */
 .mb-0 { margin-bottom: 0; }
 .mt-0 { margin-top: 0; }
 .mr-5 { margin-right: 5px; }
 /* END: Utility classes */
-
-label .label-hint {
-    font-size: 72%;
-    font-weight: normal;
-}

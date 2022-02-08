@@ -222,12 +222,16 @@
     function _attemptSignInWithAppleJs() {
         return AppleID.auth.signIn().then(function (response) {
             console.log('Apple JS login succeeded: ' + JSON.stringify(response));
-            var decodedObj = jwt_decode(response.id_token);//Only needed when email-masking is used
-            console.debug('Raw response: ' + JSON.stringify(response) + '\nDecoded JWT: ' + JSON.stringify(decodedObj));
+            var decodedBodyObj = jwt_decode(response.id_token.split('.')[1]);
+            console.log('Raw response: ' + JSON.stringify(response) +
+                '\nDecoded JWT header: ' + JSON.stringify(jwt_decode(response.id_token.split('.')[0])) +
+                '\nDecoded JWT body: ' + JSON.stringify(decodedBodyObj) +
+                '\nDecoded JWT signature: ' + JSON.stringify(jwt_decode(response.id_token.split('.')[1]))
+            );
             _sendLoginToHubspot(
-                response.email || decodedObj.email,
-                response.fullName.givenName,
-                response.fullName.familyName
+                decodedBodyObj.email,
+                decodedBodyObj.fullName.givenName,
+                decodedBodyObj.fullName.familyName
             );
         }, function (result) {
             console.error('Apple JS login failed: ' + JSON.stringify(result));

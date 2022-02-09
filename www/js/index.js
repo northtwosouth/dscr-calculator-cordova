@@ -268,7 +268,31 @@
     }//END: `_attemptSignInWithGoogle()`
 
     function _attemptSignInWithFb() {
-        alert('FB login todo');
+        // Nested helper function
+        function __statusChangeCallback(response) {
+            console.log('__statusChangeCallback(): ' + JSON.stringify(response));
+            // the person is logged into Facebook, and has logged into your app
+            if (response.status === 'connected') {
+                console.log('XXX _sendLoginToHubspot called here??? XXX');
+                // _sendLoginToHubspot(
+                //     email,
+                //     firstName,
+                //     lastName
+                // );
+                console.log('Welcome! Fetching your information...');
+                FB.api('/me', function (response) {
+                    console.log('FB.api("/me") ==> ' + JSON.stringify(response));
+                });
+            }
+            else {
+                FB.login(__statusChangeCallback, {scope: 'public_profile,email'});
+            }
+        }//END: `__statusChangeCallback`
+
+        //
+        // BEGIN: `_attemptSignInWithFb()`
+        //
+        FB.getLoginStatus(__statusChangeCallback);
     }//END: `_attemptSignInWithFb()`
 
     function _toPercent(num) {

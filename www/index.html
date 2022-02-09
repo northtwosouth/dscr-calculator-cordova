@@ -1029,7 +1029,24 @@
         <script src="lib/smoothscroll-polyfill@0.4.4/smoothscroll.min.js"></script>
         <script src="lib/bootstrap/3.4.1/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="https://appleid.cdn-apple.com/appleauth/static/jsapi/appleid/1/en_US/appleid.auth.js"></script>
-        <!-- <div id="appleid-signin" data-color="black" data-border="true" data-type="sign in"></div> -->
+        <script>
+            window.fbAsyncInit = function () {
+                FB.init({
+                    appId: '1013726842892969',
+                    cookie: true,
+                    xfbml: true,
+                    version: 'v13.0'
+                });
+                FB.AppEvents.logPageView();
+            };
+            (function (d, s, id) {
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id)) { return; }
+                js = d.createElement(s); js.id = id;
+                js.src = "https://connect.facebook.net/en_US/sdk.js";
+                fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));
+        </script>
 
         <!-- 3. app -->
         <script src="js/index.js"></script>

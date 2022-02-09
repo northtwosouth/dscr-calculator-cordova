@@ -273,15 +273,14 @@
             console.log('__statusChangeCallback(): ' + JSON.stringify(response));
             // the person is logged into Facebook, and has logged into your app
             if (response.status === 'connected') {
-                console.log('XXX _sendLoginToHubspot called here??? XXX');
-                // _sendLoginToHubspot(
-                //     email,
-                //     firstName,
-                //     lastName
-                // );
-                console.log('Welcome! Fetching your information...');
-                FB.api('/me', function (response) {
+                console.log('Logged in via FB; now fetching user data...');
+                FB.api('/me', {fields: 'first_name, last_name, email'}, function (response) {
                     console.log('FB.api("/me") ==> ' + JSON.stringify(response));
+                    _sendLoginToHubspot(
+                        response.email,
+                        response.first_name,
+                        response.last_name
+                    );
                 });
             }
             else {

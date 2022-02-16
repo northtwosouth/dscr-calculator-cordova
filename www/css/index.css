@@ -33,6 +33,9 @@ body {
 }
 
 /* BEGIN: Misc. custom styles */
+.subtitle {
+    font-style: italic;
+}
 .passFailDesc h3 {
     margin-top: 0;
 }

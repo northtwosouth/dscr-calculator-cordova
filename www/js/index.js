@@ -60,7 +60,7 @@
     function _alertSignupFailed() {
         _setSignupCompleted(false);
         _toggleDisplayOutputValues(false);
-        navigator.notification.alert('Sorry, you\'ll need to register to see your results. Press the "Calculate" button again to register!');
+        //navigator.notification.alert('Sorry, you\'ll need to register to see your results. Press the "Calculate" button again to register!');
     }
 
     //XXX BEGIN: TODO - Not used yet

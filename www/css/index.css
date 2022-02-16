@@ -93,22 +93,53 @@ label .label-hint {
     font-size: 250%;/* XXX Any larger and Webkit breaks */
 }
 /* + BEGIN: Position modal vertical middle */
-.modal {
-    text-align: center;
+@media only screen and (min-width: 768px) {
+    .modal {
+        text-align: center;
+    }
+    .modal:before {
+        display: inline-block;
+        vertical-align: middle;
+        content: " ";
+        height: 100%;
+    }
+    .modal-dialog {
+        display: inline-block;
+        text-align: left;
+        vertical-align: middle;
+    }
 }
-.modal:before {
-    display: inline-block;
-    vertical-align: middle;
-    content: " ";
-    height: 100%;
+/* Just... don't fade in from top */
+.modal.fade .modal-dialog {
+    -webkit-transform: scale(0.9);
+    -moz-transform: scale(0.9);
+    -ms-transform: scale(0.9);
+    transform: scale(0.9);
+    opacity: 0;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    transition: all 0.3s ease;
 }
-.modal-dialog {
-    display: inline-block;
-    text-align: left;
-    vertical-align: middle;
+.modal.fade.in .modal-dialog {
+    -webkit-transform: scale(1);
+    -moz-transform: scale(1);
+    -ms-transform: scale(1);
+    transform: scale(1);
+    /* -webkit-transform: translate3d(0, -300px, 0);
+    transform: translate3d(0, -300px, 0); */
+    opacity: 1;
 }
 /* + END: Position modal vertical middle */
 /* END: Extend/Tweak TWBS */
+
+/* BEGIN: Extend bootstrap-social */
+.btn-apple{color:#fff;background-color:#2b2b2b;border-color:rgba(0,0,0,0.2)}.btn-apple:focus,.btn-apple.focus{color:#fff;background-color:#000;border-color:rgba(0,0,0,0.2)}
+.btn-apple:hover{color:#fff;background-color:#000;border-color:rgba(0,0,0,0.2)}
+.btn-apple:active,.btn-apple.active,.open>.dropdown-toggle.btn-apple{color:#fff;background-color:#000;border-color:rgba(0,0,0,0.2)}.btn-apple:active:hover,.btn-apple.active:hover,.open>.dropdown-toggle.btn-apple:hover,.btn-apple:active:focus,.btn-apple.active:focus,.open>.dropdown-toggle.btn-apple:focus,.btn-apple:active.focus,.btn-apple.active.focus,.open>.dropdown-toggle.btn-apple.focus{color:#fff;background-color:#191919;border-color:rgba(0,0,0,0.2)}
+.btn-apple:active,.btn-apple.active,.open>.dropdown-toggle.btn-apple{background-image:none}
+.btn-apple.disabled:hover,.btn-apple[disabled]:hover,fieldset[disabled] .btn-apple:hover,.btn-apple.disabled:focus,.btn-apple[disabled]:focus,fieldset[disabled] .btn-apple:focus,.btn-apple.disabled.focus,.btn-apple[disabled].focus,fieldset[disabled] .btn-apple.focus{background-color:#2b2b2b;border-color:rgba(0,0,0,0.2)}
+.btn-apple .badge{color:#2b2b2b;background-color:#fff}
+/* END: Extend bootstrap-social */
 
 /* BEGIN: Utility classes */
 .mb-0 { margin-bottom: 0; }

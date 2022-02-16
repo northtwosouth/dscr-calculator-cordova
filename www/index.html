@@ -28,6 +28,7 @@
         <title>DSCR Calculator</title>
 
         <link rel="stylesheet" type="text/css" href="lib/bootstrap/3.4.1/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="lib/bootstrap-social@5.1.1/bootstrap-social.css">
         <link rel="stylesheet" type="text/css" href="lib/font-awesome@4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="css/index.css">
 
@@ -980,39 +981,37 @@
         >
             <div class="modal-dialog modal-sm" role="document">
                 <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                                aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="chooseAuthModalLabel">How would you like to authenticate?</h4>
-                    </div>
                     <div class="modal-body">
+                        <button
+                            type="button"
+                            class="close pull-right"
+                            data-dismiss="modal"
+                            aria-label="Close"
+                        ><span aria-hidden="true">&times;</span></button>
+                        <p class="small">
+                            <i>Please confirm you're not a robot by using one of the options below.
+                            This will also allow you to save your DSCR results for future reference.</i>
+                        </p>
                         <div class="row">
-                            <div class="col-xs-4 text-center">
-                                <a
-                                    class="text-danger"
-                                    href="#!"
+                            <div class="col-xs-8 col-xs-offset-2 col-sm-10 col-sm-offset-1 text-center">
+                                <a 
+                                    id="btnAttemptSignInWithGoogle"
+                                    class="btn btn-block btn-social btn-google"
                                     onclick="attemptSignInWithGoogle(); return false;"
-                                    title="Log in with your Google account"
-                                ><i class="fa fa-google fa-5x"></i><span
-                                    class="sr-only">Google</span></a>
-                            </div>
-                            <div class="col-xs-4 text-center">
-                                <a
-                                    class="text-muted"
-                                    href="#!"
+                                    title="Sign in with your Google account"
+                                ><span class="fa fa-google"></span>Sign in with Google</a>
+                                <a 
+                                    id="btnAttemptSignInWithAppleJs"
+                                    class="btn btn-block btn-social btn-apple"
                                     onclick="attemptSignInWithAppleJs(); return false;"
-                                    title="Log in with your Apple ID"
-                                ><i class="fa fa-apple fa-5x"></i><span
-                                    class="sr-only">Apple</span></a>
-                            </div>
-                            <div class="col-xs-4 text-center">
-                                <a
-                                    class="text-info"
-                                    href="#!"
+                                    title="Sign in with your Apple ID"
+                                ><span class="fa fa-apple"></span>Sign in with Apple</a>
+                                <a 
+                                    id="btnAttemptSignInWithFb"
+                                    class="btn btn-block btn-social btn-facebook"
                                     onclick="attemptSignInWithFb(); return false;"
-                                    title="Log in with your Facebook account"
-                                ><i class="fa fa-facebook fa-5x"></i><span
-                                    class="sr-only">Facebook</span></a>
+                                    title="Sign in with your Facebook account"
+                                ><span class="fa fa-facebook"></span>Sign in with Facebook</a>
                             </div>
                         </div>
                     </div>

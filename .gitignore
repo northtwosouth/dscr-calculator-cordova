@@ -24,5 +24,9 @@ node_modules/
 *.code-workspace
 .history/
 
+# Jetbrains
+.idea
+*.iml
+
 # Typescript
 /typings/*

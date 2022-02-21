@@ -36,9 +36,6 @@ body {
 .subtitle {
     font-style: italic;
 }
-.passFailDesc h3 {
-    margin-top: 0;
-}
 #sponsorLogoContainer {
     display: inline-block;
     margin-bottom: 4px;
@@ -142,7 +139,13 @@ label .label-hint {
 /* END: Extend bootstrap-social */
 
 /* BEGIN: Utility classes */
+.m-0 {
+    margin: 0;
+}
 .mb-0 { margin-bottom: 0; }
 .mt-0 { margin-top: 0; }
+.mx-0 { margin-left: 0; margin-right: 0; }
+.my-0 { margin-top: 0; margin-bottom: 0; }
 .mr-5 { margin-right: 5px; }
+.cursor-hand { cursor: pointer; }
 /* END: Utility classes */

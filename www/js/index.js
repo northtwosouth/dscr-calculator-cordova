@@ -2,39 +2,71 @@
 
     var _HS_PORTAL_ID = '20494112';
 
-    function _checkForMinDscrErr() {
+    function _checkForPassFail(/*optional*/force) {
+        var errArr = [];
+        var ficoScore = $('#ficoScore').val();
         var isCashOut = $('#purposeOfLoan').val() === 'Cashout';
         var minFico = isCashOut ? 680 : 700;
-        var maxLtv = isCashOut ? 70 : 75;
-        var outDscrValueResult = $('form#calxForm').calx('evaluate', "IF(K17='NA','Error',+E13/E18)");
-        console.log('_checkForMinDscrErr()', 'outDscrValue: ' + $('#outDscrValue').val() +
-            ' ; outDscrValueResult: ' + outDscrValueResult +
-            ' ; ficoScore: ' + $('#ficoScore').val() +
-            ' ; outLtvRatio: ' + $('#outLtvRatio').val());
-        console.log('_checkForMinDscrErr()', 'isCashOut: ' + isCashOut + ' ; minFico: ' + minFico + ' ; maxLtv: ' + maxLtv);
-        // There is a bug in Calx.js that prevents `outDscrValue` from being reliably computed each time
-        var hasMinDscrErr = (parseFloat(outDscrValueResult) < 1) && (
-            (parseInt($('#ficoScore').val()) < minFico) || (parseFloat($('#outLtvRatio').val()) > maxLtv)
+        var maxLtvWithDscr = isCashOut ? 70 : 75;
+        var maxLtv = 85;
+        var outDscrValue = $('#outDscrValue').val();
+
+        if (!force && !$('#outputValuesContainer').is(':visible')) {
+            return; // Halt immediately
+        }
+
+        var outLtvRatio = parseFloat( $('#outLtvRatio').val() );
+        if (outLtvRatio > parseFloat(maxLtv)) {
+            errArr.push('The maximum LTV ratio is ' + maxLtv + '%');
+        }
+        
+        console.log('_checkForPassFail()', 'outDscrValue: ' + outDscrValue +
+            ' ; ficoScore: ' + ficoScore +
+            ' ; outLtvRatio: ' + outLtvRatio
         );
-        console.log('_checkForMinDscrErr()', 'hasMinDscrErr ==> ' + hasMinDscrErr);
+        console.log('_checkForPassFail()', 'isCashOut: ' + isCashOut +
+            ' ; minFico: ' + minFico +
+            ' ; maxLtvWithDscr: ' + maxLtvWithDscr
+        );
+
+        var isDscrUnder1 = parseFloat(outDscrValue) < 1;
+        var isBelowMinFico = parseInt(ficoScore) < minFico;
+        var isAboveMaxLtv = outLtvRatio > maxLtvWithDscr;
+
         var $dscrErrBlockElem = $('#outDscrValue_ErrBlock');
-        $dscrErrBlockElem.text('The minimum acceptable DSCR is 1.00 if either FICO Score is less than ' + minFico + ' or LTV is greater than ' + maxLtv + '%');
-        $dscrErrBlockElem[hasMinDscrErr ? 'show' : 'hide']();
+        if (isDscrUnder1 && isBelowMinFico) {
+            errArr.push('When FICO Score is less than ' + minFico + ', the minimum acceptable DSCR is 1.00');
+        }
+        else if (isDscrUnder1 && isAboveMaxLtv) {
+            errArr.push('When LTV is greater than ' + maxLtvWithDscr + '%, the minimum acceptable DSCR is 1.00');
+        }
+
+        var hasErrors = !!errArr.length;
+        if (hasErrors) {
+            $dscrErrBlockElem.html('<ul class="list-unstyled">' + errArr.map(function (errMsg) {
+                return '<li>' + errMsg + '.</li>';//Period at end of each list item
+            }).join('') + '</ul>');
+        }
+        console.log('_checkForPassFail()', 'hasErrors ==> ' + hasErrors + '\nerrArr:\n- ' + errArr.join('\n - '));
+        $dscrErrBlockElem[hasErrors ? 'show' : 'hide']();
         var $outValuesElem = $('#outputValuesContainer');
-        $outValuesElem[hasMinDscrErr ? 'addClass' : 'removeClass']('panel-danger alert-danger');
-        $outValuesElem[hasMinDscrErr ? 'removeClass' : 'addClass']('panel-success alert-success');
+        $outValuesElem[hasErrors ? 'addClass' : 'removeClass']('panel-danger alert-danger');
+        $outValuesElem[hasErrors ? 'removeClass' : 'addClass']('panel-success alert-success');
         var $outPanelBodyElem = $('#outputValuesContainer .panel-body');
-        $outPanelBodyElem[hasMinDscrErr ? 'addClass' : 'removeClass']('bg-danger');
-        $outPanelBodyElem[hasMinDscrErr ? 'removeClass' : 'addClass']('bg-success');
-        $('#outDescFail')[hasMinDscrErr ? 'show' : 'hide']();
-        $('#outDescPass')[hasMinDscrErr ? 'hide' : 'show']();
-        var $outDscrFormGroup = $('#outDscrFormGroup');
-        $outDscrFormGroup[hasMinDscrErr ? 'addClass' : 'removeClass']('has-error');
-        // Note here that we're merely prepping the inner button visiblity (the outer section
+        $outPanelBodyElem[hasErrors ? 'addClass' : 'removeClass']('bg-danger');
+        $outPanelBodyElem[hasErrors ? 'removeClass' : 'addClass']('bg-success');
+
+        $('#outDescPass')[hasErrors ? 'hide' : 'show']();
+        $('#outDescFail')[hasErrors ? 'show' : 'hide']();
+        $('#bypassDscrSponsorContainer')[hasErrors ? 'show' : 'hide']();
+
+        $('#outDscrFormGroup')[hasErrors ? 'addClass' : 'removeClass']('has-error');
+
+        // Note here that we're merely prepping the inner button's visiblity (the outer section
         // container will be handled in the form `submitHandler`).
-        $('#emailMyResultsBtnContainer')[hasMinDscrErr ? 'hide' : 'show']();
+        $('#emailMyResultsBtnContainer')[hasErrors ? 'hide' : 'show']();
         $('#emailMyResultsFormContainer').hide();//Upon each DSCR validation, reset result form to hidden
-    }//END: `_checkForMinDscrErr`
+    }//END: `_checkForPassFail`
 
     function _setSignupCompleted(isSignupCompleted, /*optional*/signupPayload) {
         console.log('Storing "isSignupCompleted" value: ' + isSignupCompleted);
@@ -437,7 +469,7 @@
                     console.log('BEGIN: #calxForm::submitHandler()');
                     // 1b) Check whether we pass DSCR or not (if not, get the
                     // error display ready, otherwise get success results ready).
-                    _checkForMinDscrErr();
+                    _checkForPassFail(true);
 
                     // Show results if signup completed, otherwise prompt again
                     var email,
@@ -561,9 +593,16 @@
                 },//END: `data`
                 onAfterCalculate: function () {
                     console.log('BEGIN: onAfterCalculate()');
-                    // 1a) Check whether we pass DSCR or not (if not, get the
-                    // error display ready, otherwise get success results ready).
-                    _checkForMinDscrErr();
+                    // Fork this asynchronously b/c otherwise Calx.js-computed values would
+                    // not be computed in time outside `submitHandler`. (NOTE: it is critical that
+                    // `_checkForPassFail` be called this way in order to function correctly.)
+                    setTimeout(function () {
+                        // 1a) Check whether we pass DSCR or not (if not, get the
+                        // error display ready, otherwise get success results ready).
+                        console.log('BEGIN: onAfterCalculate()##setTimeout()');
+                        _checkForPassFail();
+                        console.log('END: onAfterCalculate()##setTimeout()');
+                    }, 100);
                     console.log('END: onAfterCalculate()');
                 },
             });//END: `$(...).calx()`
@@ -576,6 +615,12 @@
             $('#emailMyResultsBtn').on('click', function () {
                 var show = __toggleDisplayValuesElem('#emailMyResultsFormContainer');
                 $('#emailMyResultsBtnContainer')[show ? 'hide' : 'show']();
+            });
+
+            $('#bypassDscrSponsorContainer').on('click', function () {
+                // $('#sponsorLink').trigger('click');
+                window.open('https://trussfinancialgroup.com/');
+                return false;
             });
 
             $('#chooseAuthModal').modal({

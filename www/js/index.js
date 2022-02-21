@@ -56,11 +56,11 @@
         $outPanelBodyElem[hasErrors ? 'addClass' : 'removeClass']('bg-danger');
         $outPanelBodyElem[hasErrors ? 'removeClass' : 'addClass']('bg-success');
 
-        $('#outDescFail')[hasErrors ? 'show' : 'hide']();
         $('#outDescPass')[hasErrors ? 'hide' : 'show']();
+        $('#outDescFail')[hasErrors ? 'show' : 'hide']();
+        $('#bypassDscrSponsorContainer')[hasErrors ? 'show' : 'hide']();
 
-        var $outDscrFormGroup = $('#outDscrFormGroup');
-        $outDscrFormGroup[hasErrors ? 'addClass' : 'removeClass']('has-error');
+        $('#outDscrFormGroup')[hasErrors ? 'addClass' : 'removeClass']('has-error');
 
         // Note here that we're merely prepping the inner button's visiblity (the outer section
         // container will be handled in the form `submitHandler`).
@@ -615,6 +615,12 @@
             $('#emailMyResultsBtn').on('click', function () {
                 var show = __toggleDisplayValuesElem('#emailMyResultsFormContainer');
                 $('#emailMyResultsBtnContainer')[show ? 'hide' : 'show']();
+            });
+
+            $('#bypassDscrSponsorContainer').on('click', function () {
+                // $('#sponsorLink').trigger('click');
+                window.open('https://trussfinancialgroup.com/');
+                return false;
             });
 
             $('#chooseAuthModal').modal({

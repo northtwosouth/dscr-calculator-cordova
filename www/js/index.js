@@ -171,12 +171,6 @@
             //_scheduleLocalNotification();
             _setSignupCompleted(true, payload);
             _toggleDisplayOutputValues(true);
-            gtag('event', 'conversion', {
-                'send_to': 'AW-932138238/W9CXCJCR9pcDEP6ZvbwD',
-                'event_callback': function () {
-                    console.log('Gtag AW conversion logging completed.');
-                },
-            });
             _closeAuthModal();
         }).fail(function (jqXHR, textStatus, errorThrown) {
             console.error('Failed to send registration data to Hubspot: ' + errorThrown);
@@ -184,6 +178,12 @@
             _setSignupCompleted(false);
             _toggleDisplayOutputValues(false);
         }).always(function () {
+            gtag('event', 'conversion', {
+                'send_to': 'AW-932138238/W9CXCJCR9pcDEP6ZvbwD',
+                'event_callback': function () {
+                    console.log('Gtag AW conversion logging completed.');
+                },
+            });
             // Prepopulate "Email My Results" step with login info
             $('#emr_firstName').val(firstname);
             $('#emr_lastName').val(lastname);

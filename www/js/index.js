@@ -436,7 +436,7 @@
                     ficoScore: {
                         required: true,
                         digits: true,
-                        min: 640,
+                        min: 660,
                         max: 850,
                     },
                     numUnits: {

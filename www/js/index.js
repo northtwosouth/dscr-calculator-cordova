@@ -10,6 +10,7 @@
         var maxLtvWithDscr = isCashOut ? 70 : 75;
         var maxLtv = 85;
         var outDscrValue = $('#outDscrValue').val();
+        var hasFormErrors = !$('form#calxForm').valid();
 
         if (!force && !$('#outputValuesContainer').is(':visible')) {
             return; // Halt immediately
@@ -41,30 +42,37 @@
             errArr.push('When LTV is greater than ' + maxLtvWithDscr + '%, the minimum acceptable DSCR is 1.00');
         }
 
-        var hasErrors = !!errArr.length;
-        if (hasErrors) {
+        var hasErrorList = !!errArr.length;
+        if (hasErrorList) {
             $dscrErrBlockElem.html('<ul class="list-unstyled">' + errArr.map(function (errMsg) {
                 return '<li>' + errMsg + '.</li>';//Period at end of each list item
             }).join('') + '</ul>');
         }
-        console.log('_checkForPassFail()', 'hasErrors ==> ' + hasErrors + '\nerrArr:\n- ' + errArr.join('\n - '));
-        $dscrErrBlockElem[hasErrors ? 'show' : 'hide']();
+        console.log('_checkForPassFail()', 'hasFormErrors ==> ' + hasFormErrors +
+            '\nhasErrorList ==> ' + hasErrorList +
+            '\nerrArr:\n- ' + errArr.join('\n - '));
+        $dscrErrBlockElem[hasErrorList ? 'show' : 'hide']();
         var $outValuesElem = $('#outputValuesContainer');
-        $outValuesElem[hasErrors ? 'addClass' : 'removeClass']('panel-danger alert-danger');
-        $outValuesElem[hasErrors ? 'removeClass' : 'addClass']('panel-success alert-success');
+        $outValuesElem[hasErrorList ? 'addClass' : 'removeClass']('panel-danger alert-danger');
+        $outValuesElem[hasErrorList ? 'removeClass' : 'addClass']('panel-success alert-success');
         var $outPanelBodyElem = $('#outputValuesContainer .panel-body');
-        $outPanelBodyElem[hasErrors ? 'addClass' : 'removeClass']('bg-danger');
-        $outPanelBodyElem[hasErrors ? 'removeClass' : 'addClass']('bg-success');
+        $outPanelBodyElem[hasErrorList ? 'addClass' : 'removeClass']('bg-danger');
+        $outPanelBodyElem[hasErrorList ? 'removeClass' : 'addClass']('bg-success');
 
-        $('#outDescPass')[hasErrors ? 'hide' : 'show']();
-        $('#outDescFail')[hasErrors ? 'show' : 'hide']();
-        $('#bypassDscrSponsorContainer')[hasErrors ? 'show' : 'hide']();
+        $('#outDescPass')[hasErrorList ? 'hide' : 'show']();
+        $('#outDescFail')[hasErrorList ? 'show' : 'hide']();
+        $('#bypassDscrSponsorContainer')[hasErrorList ? 'show' : 'hide']();
 
-        $('#outDscrFormGroup')[hasErrors ? 'addClass' : 'removeClass']('has-error');
+        $('#outDscrFormGroup')[hasErrorList ? 'addClass' : 'removeClass']('has-error');
+
+        // Special case: if form validation fails later after already submitted, we need to hide manually
+        if (hasFormErrors) {
+            _toggleDisplayOutputValues(false);
+        }
 
         // Note here that we're merely prepping the inner button's visiblity (the outer section
         // container will be handled in the form `submitHandler`).
-        $('#emailMyResultsBtnContainer')[hasErrors ? 'hide' : 'show']();
+        $('#emailMyResultsBtnContainer')[hasErrorList ? 'hide' : 'show']();
         $('#emailMyResultsFormContainer').hide();//Upon each DSCR validation, reset result form to hidden
     }//END: `_checkForPassFail`
 

@@ -45,7 +45,7 @@
         var hasErrorList = !!errArr.length;
         if (hasErrorList) {
             $dscrErrBlockElem.html('<ul class="list-unstyled">' + errArr.map(function (errMsg) {
-                return '<li>' + errMsg + '.</li>';//Period at end of each list item
+                return '<li><i class="fa fa-exclamation-triangle mr-5" aria-hidden="true"></i>' + errMsg + '.</li>';//Period at end of each list item
             }).join('') + '</ul>');
         }
         console.log('_checkForPassFail()', 'hasFormErrors ==> ' + hasFormErrors +

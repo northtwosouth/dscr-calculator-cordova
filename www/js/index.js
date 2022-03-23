@@ -8,7 +8,7 @@
         var isCashOut = $('#purposeOfLoan').val() === 'Cashout';
         var minFico = isCashOut ? 680 : 700;
         var maxLtvWithDscr = isCashOut ? 70 : 75;
-        var maxLtv = 85;
+        var maxLtv = 80;
         var outDscrValue = $('#outDscrValue').val();
         var hasFormErrors = !$('form#calxForm').valid();
 

@@ -20,7 +20,7 @@
         if (outLtvRatio > parseFloat(maxLtv)) {
             errArr.push('The maximum LTV ratio is ' + maxLtv + '%');
         }
-        
+
         console.log('_checkForPassFail()', 'outDscrValue: ' + outDscrValue +
             ' ; ficoScore: ' + ficoScore +
             ' ; outLtvRatio: ' + outLtvRatio
@@ -619,7 +619,7 @@
             $('#debugValuesDisplayToggle').on('click', function () {
                 _toggleDisplayDebugValues();
             });
-            
+
             $('#emailMyResultsBtn').on('click', function () {
                 var show = __toggleDisplayValuesElem('#emailMyResultsFormContainer');
                 $('#emailMyResultsBtnContainer')[show ? 'hide' : 'show']();

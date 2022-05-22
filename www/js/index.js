@@ -539,15 +539,15 @@
             $('form#calxForm').calx({
                 data: {
                     /* beautify ignore:start */
-                    // Pricing as of 02/24/22
+                    // Pricing as of 05/16/22
                     J5:  {value: ''},  K5:  {value: _toPercent(50)},    L5:  {value: _toPercent(55)},    M5:  {value: _toPercent(60)},    N5:  {value: _toPercent(65)},    O5:  {value: _toPercent(70)},    P5:  {value: _toPercent(75)},    Q5:  {value: _toPercent(80)},
-                    J6:  {value: 760}, K6:  {value: _toPercent(4.875)}, L6:  {value: _toPercent(4.875)}, M6:  {value: _toPercent(4.875)}, N6:  {value: _toPercent(4.999)}, O6:  {value: _toPercent(4.999)}, P6:  {value: _toPercent(5.250)}, Q6:  {value: _toPercent(5.625)},
-                    J7:  {value: 740}, K7:  {value: _toPercent(4.875)}, L7:  {value: _toPercent(4.875)}, M7:  {value: _toPercent(4.999)}, N7:  {value: _toPercent(4.999)}, O7:  {value: _toPercent(4.999)}, P7:  {value: _toPercent(5.250)}, Q7:  {value: _toPercent(5.750)},
-                    J8:  {value: 720}, K8:  {value: _toPercent(4.999)}, L8:  {value: _toPercent(4.999)}, M8:  {value: _toPercent(5.125)}, N8:  {value: _toPercent(5.125)}, O8:  {value: _toPercent(5.125)}, P8:  {value: _toPercent(5.500)}, Q8:  {value: _toPercent(5.875)},
-                    J9:  {value: 700}, K9:  {value: _toPercent(4.999)}, L9:  {value: _toPercent(5.125)}, M9:  {value: _toPercent(5.125)}, N9:  {value: _toPercent(5.250)}, O9:  {value: _toPercent(5.375)}, P9:  {value: _toPercent(5.625)}, Q9:  {value: _toPercent(5.999)},
-                    J10: {value: 680}, K10: {value: _toPercent(5.125)}, L10: {value: _toPercent(5.125)}, M10: {value: _toPercent(5.250)}, N10: {value: _toPercent(5.375)}, O10: {value: _toPercent(5.625)}, P10: {value: _toPercent(5.750)}, Q10: {value: _toPercent(6.250)},
-                    J11: {value: 660}, K11: {value: _toPercent(5.500)}, L11: {value: _toPercent(5.625)}, M11: {value: _toPercent(5.750)}, N11: {value: _toPercent(5.875)}, O11: {value: _toPercent(5.999)}, P11: {value: _toPercent(6.375)}, Q11: {value: _toPercent(6.999)},
-                    J12: {value: 640}, K12: {value: _toPercent(5.750)}, L12: {value: _toPercent(5.875)}, M12: {value: _toPercent(5.999)}, N12: {value: _toPercent(6.125)}, O12: {value: _toPercent(6.625)}, P12: {value: _toPercent(7.125)}, Q12: {value: _toPercent(7.875)},
+                    J6:  {value: 760}, K6:  {value: _toPercent(6.250)}, L6:  {value: _toPercent(6.250)}, M6:  {value: _toPercent(6.250)}, N6:  {value: _toPercent(6.500)}, O6:  {value: _toPercent(6.625)}, P6:  {value: _toPercent(6.999)}, Q6:  {value: _toPercent(7.500)},
+                    J7:  {value: 740}, K7:  {value: _toPercent(6.250)}, L7:  {value: _toPercent(6.250)}, M7:  {value: _toPercent(6.375)}, N7:  {value: _toPercent(6.500)}, O7:  {value: _toPercent(6.625)}, P7:  {value: _toPercent(6.999)}, Q7:  {value: _toPercent(7.625)},
+                    J8:  {value: 720}, K8:  {value: _toPercent(6.375)}, L8:  {value: _toPercent(6.375)}, M8:  {value: _toPercent(6.625)}, N8:  {value: _toPercent(6.750)}, O8:  {value: _toPercent(6.750)}, P8:  {value: _toPercent(7.375)}, Q8:  {value: _toPercent(7.999)},
+                    J9:  {value: 700}, K9:  {value: _toPercent(6.500)}, L9:  {value: _toPercent(6.875)}, M9:  {value: _toPercent(6.875)}, N9:  {value: _toPercent(6.999)}, O9:  {value: _toPercent(7.250)}, P9:  {value: _toPercent(7.625)}, Q9:  {value: _toPercent(8.375)},
+                    J10: {value: 680}, K10: {value: _toPercent(6.875)}, L10: {value: _toPercent(6.875)}, M10: {value: _toPercent(6.999)}, N10: {value: _toPercent(7.250)}, O10: {value: _toPercent(7.500)}, P10: {value: _toPercent(7.750)}, Q10: {value: _toPercent(8.625)},
+                    J11: {value: 660}, K11: {value: _toPercent(7.125)}, L11: {value: _toPercent(7.375)}, M11: {value: _toPercent(7.500)}, N11: {value: _toPercent(7.625)}, O11: {value: _toPercent(7.750)}, P11: {value: _toPercent(8.375)}, Q11: {value: _toPercent(9.375)},
+                    J12: {value: 640}, K12: {value: _toPercent(7.625)}, L12: {value: _toPercent(7.750)}, M12: {value: _toPercent(7.875)}, N12: {value: _toPercent(8.250)}, O12: {value: _toPercent(8.500)}, P12: {value: _toPercent(9.125)}, Q12: {value: _toPercent(9.375)},
                     /* beautify ignore:end */
                     K14: {//ABS_Score
                         formula: 'IF(C13<660,"NA",IF(AND(C13<680,C13>=660),660,IF(AND(C13<700,C13>=680),680,IF(AND(C13<700,C13>=680),680,IF(AND(C13<720,C13>=700),700,IF(AND(C13<740,C13>=720),720,IF(AND(C13<760,C13>=740),740,IF(C13>=760,760))))))))',

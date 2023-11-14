@@ -52,7 +52,7 @@
     "cordova-plugin-sign-in-with-apple": "^0.1.2",
     "cordova-res": "^0.15.3",
     "cordova-update-config": "^1.0.3",
-    "png-to-ico": "^2.1.2",
+    "png-to-ico": "^2.1.8",
     "xml-js": "^1.6.11"
   },
   "optionalDependencies": {

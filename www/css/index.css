@@ -33,6 +33,22 @@ body {
 }
 
 /* BEGIN: Misc. custom styles */
+.navbar-default {
+    background-color: #fff;
+}
+.app-title {
+    float: none;
+    margin: 0 auto;
+    display: table;
+    table-layout: fixed;
+}
+.app-title h1 {
+    display: inline-block;
+    vertical-align: middle;
+    float: none;
+    margin: 0 0 0 .25em;
+    color: #555;
+}
 .subtitle {
     font-style: italic;
 }

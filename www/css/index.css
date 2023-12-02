@@ -36,18 +36,22 @@ body {
 .navbar-default {
     background-color: #fff;
 }
-.app-title {
-    float: none;
-    margin: 0 auto;
-    display: table;
-    table-layout: fixed;
+.navbar-brand > img {
+    height: 60px;      /* Set to height of header logo */
 }
-.app-title h1 {
-    display: inline-block;
-    vertical-align: middle;
-    float: none;
-    margin: 0 0 0 .25em;
-    color: #555;
+.navbar-nav > li > a {
+    line-height: 60px; /* Set to height of header logo */
+}
+.navbar-nav > li > a > sup > i.fa {
+    font-size: .8em;
+}
+h1.navbar-brand {
+    font-size: 2em;
+}
+@media screen and (max-width:767px) {
+    h1.navbar-brand {
+        padding-left: 0;
+    }
 }
 .subtitle {
     font-style: italic;
